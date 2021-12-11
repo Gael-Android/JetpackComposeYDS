@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 
 @Composable
 fun JetpackComposeYDSTheme(
-    content: @Composable() () -> Unit
+    content: @Composable () -> Unit
 ) {
     YdsTheme(
         content = content

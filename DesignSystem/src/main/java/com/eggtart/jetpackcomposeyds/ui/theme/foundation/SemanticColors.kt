@@ -1,5 +1,4 @@
-package com.eggtart.jetpackcomposeyds.ui.theme
-
+package com.eggtart.jetpackcomposeyds.ui.theme.foundation
 
 val BgNormal = White000
 val BgElevated = White000

@@ -2,6 +2,11 @@ package com.eggtart.jetpackcomposeyds.ui.theme
 
 import androidx.compose.material.Shapes
 import androidx.compose.runtime.*
+import com.eggtart.jetpackcomposeyds.ui.theme.foundation.LocalTypography
+import com.eggtart.jetpackcomposeyds.ui.theme.foundation.YdsTypography
+import com.eggtart.jetpackcomposeyds.ui.theme.rule.Boarder
+import com.eggtart.jetpackcomposeyds.ui.theme.rule.LocalBoarder
+import com.eggtart.jetpackcomposeyds.ui.theme.rule.LocalRounding
 
 object YdsTheme {
 
@@ -15,26 +20,32 @@ object YdsTheme {
         @ReadOnlyComposable
         get() = LocalTypography.current
 
-    val shapes: Shapes
+    val rounding: Shapes
         @Composable
         @ReadOnlyComposable
-        get() = LocalShapes.current
+        get() = LocalRounding.current
+
+    val boarder: Boarder
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalBoarder.current
 }
 
-
+// provider
 @Composable
 fun YdsTheme(
     colors: YdsColors = YdsTheme.colors,
     typography: YdsTypography = YdsTheme.typography,
-    shapes: Shapes = YdsTheme.shapes,
+    rounding: Shapes = YdsTheme.rounding,
+    boarder: Boarder = YdsTheme.boarder,
     content: @Composable () -> Unit
 ) {
 // creating a new object for colors to not mutate the initial colors set when updating the values
-    val rememberedColors = remember { colors.copy() }.apply { updateColorsFrom(colors) }
     CompositionLocalProvider(
-        LocalColors provides rememberedColors,
+        LocalColors provides colors,
         LocalTypography provides typography,
-        LocalShapes provides shapes,
+        LocalRounding provides rounding,
+        LocalBoarder provides boarder,
     ) {
         content()
     }

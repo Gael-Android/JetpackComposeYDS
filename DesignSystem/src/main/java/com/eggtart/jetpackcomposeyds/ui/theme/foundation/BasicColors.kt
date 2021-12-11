@@ -1,4 +1,4 @@
-package com.eggtart.jetpackcomposeyds.ui.theme
+package com.eggtart.jetpackcomposeyds.ui.theme.foundation
 
 import androidx.compose.ui.graphics.Color
 
