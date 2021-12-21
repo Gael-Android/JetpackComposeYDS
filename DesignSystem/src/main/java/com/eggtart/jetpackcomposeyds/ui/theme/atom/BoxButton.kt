@@ -1,22 +1,38 @@
 package com.eggtart.jetpackcomposeyds.ui.theme.atom
 
+import android.util.Log
+import android.view.MotionEvent
+import android.widget.Toast
 import androidx.annotation.DrawableRes
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.material.ButtonDefaults.buttonColors
-import androidx.compose.material.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.ButtonDefaults.elevation
+import androidx.compose.material.ButtonDefaults.outlinedButtonColors
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.pointerInteropFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.eggtart.jetpackcomposeyds.R
+import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
-import com.eggtart.jetpackcomposeyds.ui.theme.foundation.*
-import java.lang.reflect.Modifier
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
+import com.eggtart.jetpackcomposeyds.ui.theme.foundation.IconSize
+import com.eggtart.jetpackcomposeyds.ui.theme.foundation.YdsIcon
 
 
 enum class Type {
@@ -32,14 +48,9 @@ enum class Size {
     SMALL,
 }
 
-enum class Rounding {
-    FOUR,
-    EIGHT,
-}
-
-enum class HorizontalPadding {
-    TWELVE,
-    SIXTEEN,
+enum class Rounding(val dp: Dp) {
+    FOUR(4.dp),
+    EIGHT(8.dp),
 }
 
 enum class ButtonState {
@@ -55,14 +66,13 @@ data class BoxButtonContentData(
     val horizontalPadding: Dp,
 )
 
-data class BoxButtonColorData(
-    val textColor: Color,
-    val iconColor: Color,
-    val strokeColor: Color,
-    val backgroundColor: Color,
-) {
+enum class ButtonPressState {
+    UP,
+    DOWN
 }
 
+
+@ExperimentalComposeUiApi
 @Composable
 fun BoxButton(
     text: String = "",
@@ -74,6 +84,8 @@ fun BoxButton(
     size: Size = Size.EXTRA_LARGE,
     rounding: Rounding = Rounding.EIGHT,
 ) {
+    var isPressed by remember { mutableStateOf(ButtonPressState.UP) }
+
     val boxButtonContentData = when (size) {
         Size.EXTRA_LARGE -> {
             BoxButtonContentData(
@@ -111,138 +123,282 @@ fun BoxButton(
 
 
     val buttonState = if (isWarned) {
+        ButtonState.IS_WARNED
+    } else {
         if (isDisabled) {
             ButtonState.IS_DISABLED
         } else {
             ButtonState.IS_ENABLED
         }
-    } else {
-        ButtonState.IS_WARNED
     }
+
 
     val buttonColors = when (type) {
         Type.FILLED -> {
             when (buttonState) {
                 ButtonState.IS_ENABLED -> {
-//                    BoxButtonColorData(
-//                        textColor = YdsTheme.colors.buttonReversed,
-//                        iconColor = YdsTheme.colors.buttonReversed,
-//                        strokeColor = YdsTheme.colors.buttonPoint,
-//                        backgroundColor = YdsTheme.colors.buttonPoint,
-//                    )
+                    if (isPressed == ButtonPressState.UP) {
+                        Log.d("KWK_", "not pressed")
+                        buttonColors(
+                            backgroundColor = YdsTheme.colors.buttonPoint,
+                            contentColor = YdsTheme.colors.buttonReversed,
+                            disabledBackgroundColor = YdsTheme.colors.buttonDisabledBG,
+                            disabledContentColor = YdsTheme.colors.buttonDisabled,
+                        )
+                    } else {
+                        Log.d("KWK_", "pressed")
+                        buttonColors(
+                            backgroundColor = YdsTheme.colors.buttonPointPressed,
+                            contentColor = YdsTheme.colors.buttonReversed,
+                            disabledBackgroundColor = YdsTheme.colors.buttonDisabledBG,
+                            disabledContentColor = YdsTheme.colors.buttonDisabled,
+                        )
+                    }
+                }
+                ButtonState.IS_DISABLED -> {
                     buttonColors(
                         backgroundColor = YdsTheme.colors.buttonPoint,
                         contentColor = YdsTheme.colors.buttonReversed,
-                        disabledBackgroundColor = 
-                    )
-                }
-                ButtonState.IS_DISABLED -> {
-                    BoxButtonColorData(
-                        textColor = YdsTheme.colors.buttonDisabled,
-                        iconColor = YdsTheme.colors.buttonDisabled,
-                        strokeColor = YdsTheme.colors.buttonDisabledBG,
-                        backgroundColor = YdsTheme.colors.buttonDisabledBG,
+                        disabledBackgroundColor = YdsTheme.colors.buttonDisabledBG,
+                        disabledContentColor = YdsTheme.colors.buttonDisabled,
                     )
                 }
                 ButtonState.IS_WARNED -> {
-                    BoxButtonColorData(
-                        textColor = YdsTheme.colors.buttonReversed,
-                        iconColor = YdsTheme.colors.buttonReversed,
-                        strokeColor = YdsTheme.colors.buttonDisabledBG,
-                        backgroundColor = YdsTheme.colors.buttonDisabledBG,
-                    )
+                    if (isPressed == ButtonPressState.UP) {
+                        buttonColors(
+                            backgroundColor = YdsTheme.colors.buttonWarned,
+                            contentColor = YdsTheme.colors.buttonReversed,
+                            disabledBackgroundColor = YdsTheme.colors.buttonWarned,
+                            disabledContentColor = YdsTheme.colors.buttonReversed,
+                        )
+                    } else {
+                        buttonColors(
+                            backgroundColor = YdsTheme.colors.buttonWarnedPressed,
+                            contentColor = YdsTheme.colors.buttonReversed,
+                            disabledBackgroundColor = YdsTheme.colors.buttonWarnedPressed,
+                            disabledContentColor = YdsTheme.colors.buttonReversed,
+                        )
+                    }
                 }
             }
         }
         Type.TINTED -> {
             when (buttonState) {
                 ButtonState.IS_ENABLED -> {
-                    BoxButtonColorData(
-                        textColor = YdsTheme.colors.buttonPoint,
-                        iconColor = YdsTheme.colors.buttonPoint,
-                        strokeColor = YdsTheme.colors.buttonPointBG,
-                        backgroundColor = YdsTheme.colors.buttonPointBG,
-                    )
+                    if (isPressed == ButtonPressState.UP) {
+                        buttonColors(
+                            backgroundColor = YdsTheme.colors.buttonPointBG,
+                            contentColor = YdsTheme.colors.buttonPoint,
+                            disabledBackgroundColor = YdsTheme.colors.buttonDisabledBG,
+                            disabledContentColor = YdsTheme.colors.buttonDisabled,
+                        )
+                    } else {
+                        buttonColors(
+                            backgroundColor = YdsTheme.colors.buttonPointBG,
+                            contentColor = YdsTheme.colors.buttonPointPressed,
+                            disabledBackgroundColor = YdsTheme.colors.buttonDisabledBG,
+                            disabledContentColor = YdsTheme.colors.buttonDisabled,
+                        )
+                    }
                 }
                 ButtonState.IS_DISABLED -> {
-                    BoxButtonColorData(
-                        textColor = YdsTheme.colors.buttonDisabled,
-                        iconColor = YdsTheme.colors.buttonDisabled,
-                        strokeColor = YdsTheme.colors.buttonDisabledBG,
+                    buttonColors(
                         backgroundColor = YdsTheme.colors.buttonDisabledBG,
+                        contentColor = YdsTheme.colors.buttonDisabled,
+                        disabledBackgroundColor = YdsTheme.colors.buttonDisabledBG,
+                        disabledContentColor = YdsTheme.colors.buttonDisabled,
                     )
                 }
                 ButtonState.IS_WARNED -> {
-                    BoxButtonColorData(
-                        textColor = YdsTheme.colors.buttonWarned,
-                        iconColor = YdsTheme.colors.buttonWarned,
-                        strokeColor = YdsTheme.colors.buttonWarnedBG,
-                        backgroundColor = YdsTheme.colors.buttonWarnedBG,
-                    )
+                    if (isPressed == ButtonPressState.UP) {
+                        buttonColors(
+                            backgroundColor = YdsTheme.colors.buttonWarnedBG,
+                            contentColor = YdsTheme.colors.buttonWarned,
+                            disabledBackgroundColor = YdsTheme.colors.buttonWarnedBG,
+                            disabledContentColor = YdsTheme.colors.buttonWarned,
+                        )
+                    } else {
+                        buttonColors(
+                            backgroundColor = YdsTheme.colors.buttonWarnedBG,
+                            contentColor = YdsTheme.colors.buttonWarnedPressed,
+                            disabledBackgroundColor = YdsTheme.colors.buttonWarnedBG,
+                            disabledContentColor = YdsTheme.colors.buttonWarnedPressed,
+                        )
+                    }
                 }
             }
         }
         Type.LINE -> {
             when (buttonState) {
                 ButtonState.IS_ENABLED -> {
-                    BoxButtonColorData(
-                        textColor = YdsTheme.colors.buttonPoint,
-                        iconColor = YdsTheme.colors.buttonPoint,
-                        strokeColor = YdsTheme.colors.buttonPoint,
-                        backgroundColor = YdsTheme.colors.buttonNormal,
-                    )
+                    if (isPressed == ButtonPressState.UP) {
+                        outlinedButtonColors(
+                            backgroundColor = YdsTheme.colors.bgNormal,
+                            contentColor = YdsTheme.colors.buttonPoint,
+                            disabledContentColor = YdsTheme.colors.buttonPoint
+                        )
+                    } else {
+                        outlinedButtonColors(
+                            backgroundColor = YdsTheme.colors.bgNormal,
+                            contentColor = YdsTheme.colors.buttonPointPressed,
+                            disabledContentColor = YdsTheme.colors.buttonPointPressed
+                        )
+                    }
                 }
                 ButtonState.IS_DISABLED -> {
-                    BoxButtonColorData(
-                        textColor = YdsTheme.colors.buttonDisabled,
-                        iconColor = YdsTheme.colors.buttonDisabled,
-                        strokeColor = YdsTheme.colors.buttonDisabled,
-                        backgroundColor = YdsTheme.colors.buttonNormal,
+                    outlinedButtonColors(
+                        backgroundColor = YdsTheme.colors.bgNormal,
+                        contentColor = YdsTheme.colors.buttonDisabled,
+                        disabledContentColor = YdsTheme.colors.buttonDisabled
                     )
                 }
                 ButtonState.IS_WARNED -> {
-                    BoxButtonColorData(
-                        textColor = YdsTheme.colors.buttonWarned,
-                        iconColor = YdsTheme.colors.buttonWarned,
-                        strokeColor = YdsTheme.colors.buttonWarned,
-                        backgroundColor = YdsTheme.colors.buttonNormal,
-                    )
+                    if (isPressed == ButtonPressState.UP) {
+                        outlinedButtonColors(
+                            backgroundColor = YdsTheme.colors.bgNormal,
+                            contentColor = YdsTheme.colors.buttonWarned,
+                            disabledContentColor = YdsTheme.colors.buttonWarned
+                        )
+                    } else {
+                        outlinedButtonColors(
+                            backgroundColor = YdsTheme.colors.bgNormal,
+                            contentColor = YdsTheme.colors.buttonWarnedPressed,
+                            disabledContentColor = YdsTheme.colors.buttonWarnedPressed
+                        )
+                    }
                 }
             }
         }
     }
 
-    when (type) {
-        Type.FILLED -> {
-            Button(
-                onClick = {
-
-                },
-                enabled = buttonState == ButtonState.IS_ENABLED,
-                colors = buttonColors(
-                    backgroundColor = boxButtonColorData.backgroundColor,
-                    contentColor = boxButtonColorData.,
-                    disabledBackgroundColor =,
-                    disabledContentColor =,
+    Button(
+        onClick = {},
+        modifier = Modifier
+            .height(boxButtonContentData.height)
+            .padding(horizontal = boxButtonContentData.horizontalPadding)
+            .pointerInteropFilter {
+                when (it.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        isPressed = ButtonPressState.DOWN
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        isPressed = ButtonPressState.UP
+                    }
+                }
+                true
+            },
+        enabled = buttonState != ButtonState.IS_DISABLED,
+        elevation = elevation(
+            defaultElevation = 0.dp,
+            pressedElevation = 0.dp,
+            disabledElevation = 0.dp
+        ),
+        colors = buttonColors,
+        border = BorderStroke(
+            1.dp,
+            buttonColors.contentColor(enabled = buttonState != ButtonState.IS_DISABLED)
+                .value
+        ),
+        shape = RoundedCornerShape(rounding.dp),
+    ) {
+        if (leftIcon != null) {
+            YdsIcon(
+                id = leftIcon,
+                iconSize = boxButtonContentData.iconSize,
+                tint = buttonColors.contentColor(
+                    enabled = (buttonState == ButtonState.IS_ENABLED)
+                ).value,
+            )
+            Spacer(
+                modifier = Modifier.padding(
+                    end = 4.dp
                 )
-            ) {
-
-            }
+            )
         }
-        Type.TINTED -> {
-            Button(
-
-            ) {
-
-            }
-        }
-        Type.LINE -> {
-            Button(
-
-            ) {
-
-            }
+        Text(
+            text = text,
+            style = boxButtonContentData.typo
+        )
+        if (leftIcon == null && rightIcon != null) {
+            Spacer(
+                modifier = Modifier.padding(
+                    end = 4.dp
+                )
+            )
+            YdsIcon(
+                id = rightIcon,
+                iconSize = boxButtonContentData.iconSize,
+                tint = buttonColors.contentColor(
+                    enabled = (buttonState == ButtonState.IS_ENABLED)
+                ).value,
+            )
         }
     }
 
 }
+
+@ExperimentalComposeUiApi
+@Preview(
+    name = "PreviewBoxButton",
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+private fun PreviewBoxButton() {
+    val type = Type.LINE
+    val isDisabled = false
+    val isWarned = false
+
+
+    JetpackComposeYDSTheme {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            BoxButton(
+                text = "what a nice world!",
+                leftIcon = R.drawable.ic_ground_line,
+                rightIcon = R.drawable.ic_ground_line,
+                type = type,
+                isDisabled = isDisabled,
+                isWarned = isWarned,
+                size = Size.EXTRA_LARGE,
+                rounding = Rounding.EIGHT
+            )
+            BoxButton(
+                text = "what a nice world!",
+                leftIcon = R.drawable.ic_ground_line,
+                rightIcon = R.drawable.ic_ground_line,
+                type = type,
+                isDisabled = isDisabled,
+                isWarned = isWarned,
+                size = Size.LARGE,
+                rounding = Rounding.EIGHT
+            )
+            BoxButton(
+                text = "what a nice world!",
+                leftIcon = R.drawable.ic_ground_line,
+                rightIcon = R.drawable.ic_ground_line,
+                type = type,
+                isDisabled = isDisabled,
+                isWarned = isWarned,
+                size = Size.MEDIUM,
+                rounding = Rounding.EIGHT
+            )
+            BoxButton(
+                text = "what a nice world!",
+                leftIcon = R.drawable.ic_ground_line,
+                rightIcon = R.drawable.ic_ground_line,
+                type = type,
+                isDisabled = isDisabled,
+                isWarned = isWarned,
+                size = Size.SMALL,
+                rounding = Rounding.EIGHT
+            )
+        }
+    }
+}
+

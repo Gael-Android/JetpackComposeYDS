@@ -23,7 +23,7 @@ enum class IconSize(val value: Dp) {
 @Composable
 fun YdsIcon(
     @DrawableRes id: Int,
-    iconSize: IconSize = IconSize.MEDIUM,
+    iconSize: IconSize,
     tint: Color,
 ) {
     Icon(
