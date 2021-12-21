@@ -4,10 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable/ic_adbadge_filled.xml" value="0.1935185185185185" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable/ic_ground_filled.xml" value="0.18518518518518517" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable/ic_ground_line.xml" value="0.18518518518518517" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

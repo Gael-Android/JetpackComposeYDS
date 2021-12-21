@@ -1,26 +1,45 @@
 package com.eggtart.jetpackcomposeyds.ui.theme.foundation
 
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.eggtart.jetpackcomposeyds.R
 
-internal enum class IconState {
-    LINE,
-    FILLED,
+enum class IconSize(val value: Dp) {
+    EXTRA_SMALL(16.dp),
+    SMALL(20.dp),
+    MEDIUM(24.dp),
+    LARGE(48.dp)
 }
 
-internal enum class IconSize(value: Int) {
-    PX16(16),
-    PX20(20),
-    PX24(24),
-    PX48(48),
+@Composable
+fun YdsIcon(
+    @DrawableRes id: Int,
+    iconSize: IconSize = IconSize.MEDIUM,
+    tint: Color,
+) {
+    Icon(
+        imageVector = ImageVector
+            .vectorResource(id = id),
+        contentDescription = "$id",
+        modifier = Modifier.size(iconSize.value),
+        tint = tint
+    )
 }
 
-internal data class Icon(
-    val iconState: IconState = IconState.LINE,
-    val iconSize: IconSize = IconSize.PX24,
-    val drawable: Int,
-)
 
-// TODO: 2021-12-12 must implement
+
+
+
+
 
 
 
