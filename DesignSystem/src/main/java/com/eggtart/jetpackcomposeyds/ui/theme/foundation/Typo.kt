@@ -1,10 +1,13 @@
 package com.eggtart.jetpackcomposeyds.ui.theme.foundation
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.sp
 import com.eggtart.jetpackcomposeyds.R
 
@@ -15,6 +18,9 @@ val fonts = FontFamily(
 )
 
 // TODO: 2021-12-12 figma에는 dp라고 나와있는데 그냥 sp라고 씀
+
+@Composable
+fun dpToSp(dp: Dp) = with(LocalDensity.current) { dp.toSp() }
 
 data class YdsTypography(
     val Title1: TextStyle = TextStyle(

@@ -2,29 +2,21 @@ package com.eggtart.jetpackcomposeyds.ui.theme.atom
 
 import android.util.Log
 import android.view.MotionEvent
-import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults.buttonColors
 import androidx.compose.material.ButtonDefaults.elevation
 import androidx.compose.material.ButtonDefaults.outlinedButtonColors
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.input.pointer.pointerInteropFilter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -32,6 +24,7 @@ import com.eggtart.jetpackcomposeyds.R
 import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.IconSize
+import com.eggtart.jetpackcomposeyds.ui.theme.foundation.LocalTypography
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.YdsIcon
 
 
@@ -53,20 +46,20 @@ enum class Rounding(val dp: Dp) {
     EIGHT(8.dp),
 }
 
-enum class ButtonState {
+private enum class ButtonState {
     IS_DISABLED,
     IS_ENABLED,
     IS_WARNED,
 }
 
-data class BoxButtonContentData(
+private data class BoxButtonContentData(
     val height: Dp,
     val typo: TextStyle,
     val iconSize: IconSize,
     val horizontalPadding: Dp,
 )
 
-enum class ButtonPressState {
+private enum class ButtonPressState {
     UP,
     DOWN
 }
@@ -138,7 +131,6 @@ fun BoxButton(
             when (buttonState) {
                 ButtonState.IS_ENABLED -> {
                     if (isPressed == ButtonPressState.UP) {
-                        Log.d("KWK_", "not pressed")
                         buttonColors(
                             backgroundColor = YdsTheme.colors.buttonPoint,
                             contentColor = YdsTheme.colors.buttonReversed,
@@ -146,7 +138,6 @@ fun BoxButton(
                             disabledContentColor = YdsTheme.colors.buttonDisabled,
                         )
                     } else {
-                        Log.d("KWK_", "pressed")
                         buttonColors(
                             backgroundColor = YdsTheme.colors.buttonPointPressed,
                             contentColor = YdsTheme.colors.buttonReversed,
@@ -340,15 +331,14 @@ fun BoxButton(
 @ExperimentalComposeUiApi
 @Preview(
     name = "PreviewBoxButton",
-    showBackground = true,
-    showSystemUi = true
+    showSystemUi = true,
+    fontScale = 1F
 )
 @Composable
 private fun PreviewBoxButton() {
-    val type = Type.LINE
-    val isDisabled = false
+    val type = Type.TINTED
+    val isDisabled = true
     val isWarned = false
-
 
     JetpackComposeYDSTheme {
         Column(
