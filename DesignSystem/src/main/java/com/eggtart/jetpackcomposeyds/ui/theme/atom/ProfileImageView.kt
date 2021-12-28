@@ -1,15 +1,11 @@
 package com.eggtart.jetpackcomposeyds.ui.theme.atom
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.GenericShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.*
 import androidx.compose.ui.layout.ContentScale
@@ -22,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import com.eggtart.jetpackcomposeyds.R
 import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
-import com.eggtart.jetpackcomposeyds.ui.theme.foundation.BorderNormal
 
 
 class SquircleShape : Shape {
@@ -86,14 +81,14 @@ enum class ProfileImageViewSize(val dp: Dp) {
 @Composable
 fun ProfileImageView(
     @DrawableRes image: Int? = null,
-    profileImageViewSize: ProfileImageViewSize = ProfileImageViewSize.EXTRA_LARGE
+    size: ProfileImageViewSize = ProfileImageViewSize.EXTRA_LARGE
 ) {
     Image(
         contentScale = ContentScale.Crop,
         painter = painterResource(id = image ?: R.drawable.my_profile_image),
         contentDescription = "my_profile_image",
         modifier = Modifier
-            .size(size = profileImageViewSize.dp)
+            .size(size = size.dp)
             .border(
                 width = YdsTheme.boarder.normal,
                 color = YdsTheme.colors.borderNormal,
@@ -118,7 +113,7 @@ fun PreviewProfileImageView() {
         ) {
             for (i in ProfileImageViewSize.values()) {
                 ProfileImageView(
-                    profileImageViewSize = i
+                    size = i
                 )
             }
         }

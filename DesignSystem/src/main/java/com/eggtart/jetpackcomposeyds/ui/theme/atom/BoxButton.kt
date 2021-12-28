@@ -1,6 +1,5 @@
 package com.eggtart.jetpackcomposeyds.ui.theme.atom
 
-import android.util.Log
 import android.view.MotionEvent
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.BorderStroke
@@ -24,29 +23,28 @@ import com.eggtart.jetpackcomposeyds.R
 import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.IconSize
-import com.eggtart.jetpackcomposeyds.ui.theme.foundation.LocalTypography
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.YdsIcon
 
 
-enum class Type {
+enum class BoxButtonType {
     FILLED, // 가장 중요한 버튼에 사용합니다. 남용을 지양해주세요.
     TINTED, // 어중간하게 중요한 버튼에 사용합니다.
     LINE, // 덜 중요한 버튼에 사용합니다.
 }
 
-enum class Size {
+enum class BoxButtonSize {
     EXTRA_LARGE, // 화면에서 단 하나의 버튼을 강조할 때 사용합니다.
     LARGE,
     MEDIUM,
     SMALL,
 }
 
-enum class Rounding(val dp: Dp) {
+enum class BoxButtonRounding(val dp: Dp) {
     FOUR(4.dp),
     EIGHT(8.dp),
 }
 
-private enum class ButtonState {
+private enum class BoxButtonButtonState {
     IS_DISABLED,
     IS_ENABLED,
     IS_WARNED,
@@ -71,16 +69,16 @@ fun BoxButton(
     text: String = "",
     @DrawableRes leftIcon: Int? = null,
     @DrawableRes rightIcon: Int? = null,
-    type: Type = Type.FILLED,
+    boxButtonType: BoxButtonType = BoxButtonType.FILLED,
     isDisabled: Boolean = false,
     isWarned: Boolean = false,
-    size: Size = Size.EXTRA_LARGE,
-    rounding: Rounding = Rounding.EIGHT,
+    boxButtonSize: BoxButtonSize = BoxButtonSize.EXTRA_LARGE,
+    rounding: BoxButtonRounding = BoxButtonRounding.EIGHT,
 ) {
     var isPressed by remember { mutableStateOf(ButtonPressState.UP) }
 
-    val boxButtonContentData = when (size) {
-        Size.EXTRA_LARGE -> {
+    val boxButtonContentData = when (boxButtonSize) {
+        BoxButtonSize.EXTRA_LARGE -> {
             BoxButtonContentData(
                 height = 56.dp,
                 typo = YdsTheme.typography.Button1,
@@ -88,7 +86,7 @@ fun BoxButton(
                 horizontalPadding = 16.dp,
             )
         }
-        Size.LARGE -> {
+        BoxButtonSize.LARGE -> {
             BoxButtonContentData(
                 height = 48.dp,
                 typo = YdsTheme.typography.Button2,
@@ -96,7 +94,7 @@ fun BoxButton(
                 horizontalPadding = 16.dp,
             )
         }
-        Size.MEDIUM -> {
+        BoxButtonSize.MEDIUM -> {
             BoxButtonContentData(
                 height = 40.dp,
                 typo = YdsTheme.typography.Button2,
@@ -104,7 +102,7 @@ fun BoxButton(
                 horizontalPadding = 12.dp,
             )
         }
-        Size.SMALL -> {
+        BoxButtonSize.SMALL -> {
             BoxButtonContentData(
                 height = 32.dp,
                 typo = YdsTheme.typography.Button4,
@@ -116,20 +114,20 @@ fun BoxButton(
 
 
     val buttonState = if (isWarned) {
-        ButtonState.IS_WARNED
+        BoxButtonButtonState.IS_WARNED
     } else {
         if (isDisabled) {
-            ButtonState.IS_DISABLED
+            BoxButtonButtonState.IS_DISABLED
         } else {
-            ButtonState.IS_ENABLED
+            BoxButtonButtonState.IS_ENABLED
         }
     }
 
 
-    val buttonColors = when (type) {
-        Type.FILLED -> {
+    val buttonColors = when (boxButtonType) {
+        BoxButtonType.FILLED -> {
             when (buttonState) {
-                ButtonState.IS_ENABLED -> {
+                BoxButtonButtonState.IS_ENABLED -> {
                     if (isPressed == ButtonPressState.UP) {
                         buttonColors(
                             backgroundColor = YdsTheme.colors.buttonPoint,
@@ -146,7 +144,7 @@ fun BoxButton(
                         )
                     }
                 }
-                ButtonState.IS_DISABLED -> {
+                BoxButtonButtonState.IS_DISABLED -> {
                     buttonColors(
                         backgroundColor = YdsTheme.colors.buttonPoint,
                         contentColor = YdsTheme.colors.buttonReversed,
@@ -154,7 +152,7 @@ fun BoxButton(
                         disabledContentColor = YdsTheme.colors.buttonDisabled,
                     )
                 }
-                ButtonState.IS_WARNED -> {
+                BoxButtonButtonState.IS_WARNED -> {
                     if (isPressed == ButtonPressState.UP) {
                         buttonColors(
                             backgroundColor = YdsTheme.colors.buttonWarned,
@@ -173,9 +171,9 @@ fun BoxButton(
                 }
             }
         }
-        Type.TINTED -> {
+        BoxButtonType.TINTED -> {
             when (buttonState) {
-                ButtonState.IS_ENABLED -> {
+                BoxButtonButtonState.IS_ENABLED -> {
                     if (isPressed == ButtonPressState.UP) {
                         buttonColors(
                             backgroundColor = YdsTheme.colors.buttonPointBG,
@@ -192,7 +190,7 @@ fun BoxButton(
                         )
                     }
                 }
-                ButtonState.IS_DISABLED -> {
+                BoxButtonButtonState.IS_DISABLED -> {
                     buttonColors(
                         backgroundColor = YdsTheme.colors.buttonDisabledBG,
                         contentColor = YdsTheme.colors.buttonDisabled,
@@ -200,7 +198,7 @@ fun BoxButton(
                         disabledContentColor = YdsTheme.colors.buttonDisabled,
                     )
                 }
-                ButtonState.IS_WARNED -> {
+                BoxButtonButtonState.IS_WARNED -> {
                     if (isPressed == ButtonPressState.UP) {
                         buttonColors(
                             backgroundColor = YdsTheme.colors.buttonWarnedBG,
@@ -219,9 +217,9 @@ fun BoxButton(
                 }
             }
         }
-        Type.LINE -> {
+        BoxButtonType.LINE -> {
             when (buttonState) {
-                ButtonState.IS_ENABLED -> {
+                BoxButtonButtonState.IS_ENABLED -> {
                     if (isPressed == ButtonPressState.UP) {
                         outlinedButtonColors(
                             backgroundColor = YdsTheme.colors.bgNormal,
@@ -236,14 +234,14 @@ fun BoxButton(
                         )
                     }
                 }
-                ButtonState.IS_DISABLED -> {
+                BoxButtonButtonState.IS_DISABLED -> {
                     outlinedButtonColors(
                         backgroundColor = YdsTheme.colors.bgNormal,
                         contentColor = YdsTheme.colors.buttonDisabled,
                         disabledContentColor = YdsTheme.colors.buttonDisabled
                     )
                 }
-                ButtonState.IS_WARNED -> {
+                BoxButtonButtonState.IS_WARNED -> {
                     if (isPressed == ButtonPressState.UP) {
                         outlinedButtonColors(
                             backgroundColor = YdsTheme.colors.bgNormal,
@@ -278,18 +276,22 @@ fun BoxButton(
                 }
                 true
             },
-        enabled = buttonState != ButtonState.IS_DISABLED,
+        enabled = buttonState != BoxButtonButtonState.IS_DISABLED,
         elevation = elevation(
             defaultElevation = 0.dp,
             pressedElevation = 0.dp,
             disabledElevation = 0.dp
         ),
         colors = buttonColors,
-        border = BorderStroke(
-            1.dp,
-            buttonColors.contentColor(enabled = buttonState != ButtonState.IS_DISABLED)
-                .value
-        ),
+        border = if (boxButtonType == BoxButtonType.LINE) {
+            BorderStroke(
+                1.dp,
+                buttonColors.contentColor(enabled = buttonState != BoxButtonButtonState.IS_DISABLED)
+                    .value
+            )
+        } else {
+            null
+        },
         shape = RoundedCornerShape(rounding.dp),
     ) {
         if (leftIcon != null) {
@@ -297,7 +299,7 @@ fun BoxButton(
                 id = leftIcon,
                 iconSize = boxButtonContentData.iconSize,
                 tint = buttonColors.contentColor(
-                    enabled = (buttonState == ButtonState.IS_ENABLED)
+                    enabled = (buttonState != BoxButtonButtonState.IS_DISABLED)
                 ).value,
             )
             Spacer(
@@ -320,7 +322,7 @@ fun BoxButton(
                 id = rightIcon,
                 iconSize = boxButtonContentData.iconSize,
                 tint = buttonColors.contentColor(
-                    enabled = (buttonState == ButtonState.IS_ENABLED)
+                    enabled = (buttonState != BoxButtonButtonState.IS_DISABLED)
                 ).value,
             )
         }
@@ -336,9 +338,9 @@ fun BoxButton(
 )
 @Composable
 private fun PreviewBoxButton() {
-    val type = Type.TINTED
-    val isDisabled = true
-    val isWarned = false
+    val type = BoxButtonType.FILLED
+    val isDisabled = false
+    val isWarned = true
 
     JetpackComposeYDSTheme {
         Column(
@@ -352,41 +354,41 @@ private fun PreviewBoxButton() {
                 text = "what a nice world!",
                 leftIcon = R.drawable.ic_ground_line,
                 rightIcon = R.drawable.ic_ground_line,
-                type = type,
+                boxButtonType = type,
                 isDisabled = isDisabled,
                 isWarned = isWarned,
-                size = Size.EXTRA_LARGE,
-                rounding = Rounding.EIGHT
+                boxButtonSize = BoxButtonSize.EXTRA_LARGE,
+                rounding = BoxButtonRounding.EIGHT
             )
             BoxButton(
                 text = "what a nice world!",
                 leftIcon = R.drawable.ic_ground_line,
                 rightIcon = R.drawable.ic_ground_line,
-                type = type,
+                boxButtonType = type,
                 isDisabled = isDisabled,
                 isWarned = isWarned,
-                size = Size.LARGE,
-                rounding = Rounding.EIGHT
+                boxButtonSize = BoxButtonSize.LARGE,
+                rounding = BoxButtonRounding.EIGHT
             )
             BoxButton(
                 text = "what a nice world!",
                 leftIcon = R.drawable.ic_ground_line,
                 rightIcon = R.drawable.ic_ground_line,
-                type = type,
+                boxButtonType = type,
                 isDisabled = isDisabled,
                 isWarned = isWarned,
-                size = Size.MEDIUM,
-                rounding = Rounding.EIGHT
+                boxButtonSize = BoxButtonSize.MEDIUM,
+                rounding = BoxButtonRounding.EIGHT
             )
             BoxButton(
                 text = "what a nice world!",
                 leftIcon = R.drawable.ic_ground_line,
                 rightIcon = R.drawable.ic_ground_line,
-                type = type,
+                boxButtonType = type,
                 isDisabled = isDisabled,
                 isWarned = isWarned,
-                size = Size.SMALL,
-                rounding = Rounding.EIGHT
+                boxButtonSize = BoxButtonSize.SMALL,
+                rounding = BoxButtonRounding.EIGHT
             )
         }
     }
