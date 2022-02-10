@@ -84,19 +84,19 @@ fun PlainButton(
         PlainButtonSize.LARGE -> {
             PlainButtonContentData(
                 typo = YdsTheme.typography.Button3, // 없어야 하는데...
-                iconSize = IconSize.MEDIUM
+                iconSize = IconSize.Medium
             )
         }
         PlainButtonSize.MEDIUM -> {
             PlainButtonContentData(
                 typo = YdsTheme.typography.Button3,
-                iconSize = IconSize.SMALL
+                iconSize = IconSize.Small
             )
         }
         PlainButtonSize.SMALL -> {
             PlainButtonContentData(
                 typo = YdsTheme.typography.Button4,
-                iconSize = IconSize.EXTRA_SMALL
+                iconSize = IconSize.ExtraSmall
             )
         }
     }

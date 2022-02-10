@@ -82,7 +82,7 @@ fun BoxButton(
             BoxButtonContentData(
                 height = 56.dp,
                 typo = YdsTheme.typography.Button1,
-                iconSize = IconSize.MEDIUM,
+                iconSize = IconSize.Medium,
                 horizontalPadding = 16.dp,
             )
         }
@@ -90,7 +90,7 @@ fun BoxButton(
             BoxButtonContentData(
                 height = 48.dp,
                 typo = YdsTheme.typography.Button2,
-                iconSize = IconSize.MEDIUM,
+                iconSize = IconSize.Medium,
                 horizontalPadding = 16.dp,
             )
         }
@@ -98,7 +98,7 @@ fun BoxButton(
             BoxButtonContentData(
                 height = 40.dp,
                 typo = YdsTheme.typography.Button2,
-                iconSize = IconSize.MEDIUM,
+                iconSize = IconSize.Medium,
                 horizontalPadding = 12.dp,
             )
         }
@@ -106,7 +106,7 @@ fun BoxButton(
             BoxButtonContentData(
                 height = 32.dp,
                 typo = YdsTheme.typography.Button4,
-                iconSize = IconSize.SMALL,
+                iconSize = IconSize.Small,
                 horizontalPadding = 12.dp,
             )
         }
