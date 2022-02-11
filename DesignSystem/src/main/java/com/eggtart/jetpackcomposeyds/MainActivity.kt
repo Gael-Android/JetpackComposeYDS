@@ -32,13 +32,13 @@ class MainActivity : ComponentActivity() {
                 Column {
                     CheckBox(
                         text = "Hello world 1",
-                        disabledState = CheckBoxState.DisabledState.Disabled,
+                        activateState = CheckBoxState.ActivateState.Disabled,
                         selectedState = CheckBoxState.SelectedState.Selected,
                         sizeState = CheckBoxState.SizeState.Large
                     )
                     CheckBox(
                         text = "Hello world 2",
-                        disabledState = CheckBoxState.DisabledState.Enabled,
+                        activateState = CheckBoxState.ActivateState.Enabled,
                         selectedState = CheckBoxState.SelectedState.Selected,
                         sizeState = CheckBoxState.SizeState.Large
                     )

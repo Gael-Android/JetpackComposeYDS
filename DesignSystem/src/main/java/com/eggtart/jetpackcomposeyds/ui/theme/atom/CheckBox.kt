@@ -20,13 +20,13 @@ import com.eggtart.jetpackcomposeyds.ui.theme.foundation.IconSize
 
 data class CheckBoxState(
     val text: String,
-    val disabledState: DisabledState,
+    val activateState: ActivateState,
     val selectedState: SelectedState,
     val sizeState: SizeState,
 ) {
-    sealed class DisabledState {
-        object Disabled : DisabledState()
-        object Enabled : DisabledState()
+    sealed class ActivateState {
+        object Disabled : ActivateState()
+        object Enabled : ActivateState()
     }
 
     sealed class SelectedState {
@@ -49,11 +49,11 @@ data class CheckBoxState(
     }
 
     @Composable
-    fun getColor(): Color = when (disabledState) {
-        DisabledState.Disabled -> {
+    fun getColor(): Color = when (activateState) {
+        ActivateState.Disabled -> {
             LocalColors.current.buttonDisabled
         }
-        DisabledState.Enabled -> {
+        ActivateState.Enabled -> {
             when (selectedState) {
                 SelectedState.NotSelected ->
                     LocalColors.current.buttonNormal
@@ -93,20 +93,21 @@ data class CheckBoxState(
     }
 
     fun onClick() = this.copy(
-        selectedState = if (isClickable()) {
+        selectedState = if (isActive()) {
             selectedState.toggle()
         } else {
             selectedState
         },
     )
 
-    fun isClickable() = disabledState == DisabledState.Enabled
+    fun isActive() = activateState == ActivateState.Enabled
+    fun isSelected() = selectedState == SelectedState.Selected
 }
 
 @Composable
 fun CheckBox(
     text: String,
-    disabledState: CheckBoxState.DisabledState,
+    activateState: CheckBoxState.ActivateState,
     selectedState: CheckBoxState.SelectedState,
     sizeState: CheckBoxState.SizeState,
 ) {
@@ -114,7 +115,7 @@ fun CheckBox(
         mutableStateOf(
             CheckBoxState(
                 text = text,
-                disabledState = disabledState,
+                activateState = activateState,
                 selectedState = selectedState,
                 sizeState = sizeState
             )
@@ -123,7 +124,8 @@ fun CheckBox(
 
     Row(
         modifier = Modifier.toggleable(
-            value = checkBoxState.isClickable(),
+            value = checkBoxState.isSelected(),
+            enabled = checkBoxState.isActive(),
             interactionSource = MutableInteractionSource(),
             indication = null
         ) {
@@ -152,8 +154,8 @@ fun PreviewCheckBox() {
         )
 
         val disabledList = listOf(
-            CheckBoxState.DisabledState.Disabled,
-            CheckBoxState.DisabledState.Enabled
+            CheckBoxState.ActivateState.Disabled,
+            CheckBoxState.ActivateState.Enabled
         )
 
         val selectedList = listOf(
@@ -173,7 +175,7 @@ fun PreviewCheckBox() {
                         for (selected in selectedList)
                             CheckBox(
                                 text = "텍스트",
-                                disabledState = disabled,
+                                activateState = disabled,
                                 selectedState = selected,
                                 sizeState = size
                             )
