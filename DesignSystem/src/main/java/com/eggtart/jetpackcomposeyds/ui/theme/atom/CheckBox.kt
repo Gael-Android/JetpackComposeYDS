@@ -1,5 +1,6 @@
 package com.eggtart.jetpackcomposeyds.ui.theme.atom
 
+import android.widget.Toast
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.toggleable
@@ -9,13 +10,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.eggtart.jetpackcomposeyds.R
 import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
-import com.eggtart.jetpackcomposeyds.ui.theme.LocalColors
+import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.IconSize
 
 data class CheckBoxState(
@@ -24,6 +26,24 @@ data class CheckBoxState(
     val selectedState: SelectedState,
     val sizeState: SizeState,
 ) {
+    val color: Color
+        @Composable get() = when (activateState) {
+            ActivateState.Disabled -> {
+                YdsTheme.colors.buttonDisabled
+            }
+            ActivateState.Enabled -> {
+                when (selectedState) {
+                    SelectedState.NotSelected ->
+                        YdsTheme.colors.buttonNormal
+                    SelectedState.Selected ->
+                        YdsTheme.colors.buttonPoint
+                }
+            }
+        }
+
+    val isActive = activateState == ActivateState.Enabled
+    val isSelected = selectedState == SelectedState.Selected
+
     sealed class ActivateState {
         object Disabled : ActivateState()
         object Enabled : ActivateState()
@@ -49,29 +69,14 @@ data class CheckBoxState(
     }
 
     @Composable
-    fun getColor(): Color = when (activateState) {
-        ActivateState.Disabled -> {
-            LocalColors.current.buttonDisabled
-        }
-        ActivateState.Enabled -> {
-            when (selectedState) {
-                SelectedState.NotSelected ->
-                    LocalColors.current.buttonNormal
-                SelectedState.Selected ->
-                    LocalColors.current.buttonPoint
-            }
-        }
-    }
-
-    @Composable
-    fun DrawIcon() = when (selectedState) {
+    internal fun DrawIcon() = when (selectedState) {
         SelectedState.NotSelected -> {
             Icon(
                 painter = painterResource(id = R.drawable.ic_checkcircle_line),
                 contentDescription = "notSelected",
                 modifier = Modifier
                     .size(sizeState.iconSize.value),
-                tint = getColor()
+                tint = color
             )
         }
         SelectedState.Selected -> {
@@ -79,58 +84,49 @@ data class CheckBoxState(
                 painter = painterResource(id = R.drawable.ic_checkcircle_filled),
                 contentDescription = "selected",
                 modifier = Modifier.size(sizeState.iconSize.value),
-                tint = getColor()
+                tint = color
             )
         }
     }
 
     @Composable
-    fun DrawText() {
+    internal fun DrawText() {
         Text(
             text = text,
-            color = getColor()
+            color = color
         )
     }
 
-    fun onClick() = this.copy(
-        selectedState = if (isActive()) {
-            selectedState.toggle()
-        } else {
-            selectedState
-        },
+    fun updateStateOnToggle() = this.copy(
+        selectedState = selectedState.toggle()
     )
+}
 
-    fun isActive() = activateState == ActivateState.Enabled
-    fun isSelected() = selectedState == SelectedState.Selected
+@Composable
+fun rememberCheckBoxState(
+    text: String = "",
+    activateState: CheckBoxState.ActivateState = CheckBoxState.ActivateState.Disabled,
+    selectedState: CheckBoxState.SelectedState = CheckBoxState.SelectedState.Selected,
+    sizeState: CheckBoxState.SizeState = CheckBoxState.SizeState.Small,
+) = remember(text, activateState, selectedState, sizeState) {
+    mutableStateOf(
+        CheckBoxState(text, activateState, selectedState, sizeState)
+    )
 }
 
 @Composable
 fun CheckBox(
-    text: String,
-    activateState: CheckBoxState.ActivateState,
-    selectedState: CheckBoxState.SelectedState,
-    sizeState: CheckBoxState.SizeState,
+    checkBoxState: CheckBoxState,
+    onCheckedChange: (Boolean) -> Unit
 ) {
-    var checkBoxState by remember {
-        mutableStateOf(
-            CheckBoxState(
-                text = text,
-                activateState = activateState,
-                selectedState = selectedState,
-                sizeState = sizeState
-            )
-        )
-    }
-
     Row(
         modifier = Modifier.toggleable(
-            value = checkBoxState.isSelected(),
-            enabled = checkBoxState.isActive(),
+            value = checkBoxState.isSelected,
+            enabled = checkBoxState.isActive,
             interactionSource = MutableInteractionSource(),
-            indication = null
-        ) {
-            checkBoxState = checkBoxState.onClick()
-        },
+            indication = null,
+            onValueChange = onCheckedChange
+        ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         checkBoxState.DrawIcon()
@@ -143,10 +139,42 @@ fun CheckBox(
     }
 }
 
+@Preview
+@Composable
+fun CheckBoxStateControl() {
+    val context = LocalContext.current
+
+    var controlState by rememberCheckBoxState(
+        text = "텍스트",
+        activateState = CheckBoxState.ActivateState.Enabled,
+        selectedState = CheckBoxState.SelectedState.Selected,
+        sizeState = CheckBoxState.SizeState.Large
+    )
+
+    fun onCheck(it: Boolean) {
+        Toast.makeText(
+            context,
+            "$it",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    JetpackComposeYDSTheme {
+        CheckBox(
+            controlState
+        ) {
+            controlState = controlState.updateStateOnToggle()
+            onCheck(it)
+        }
+    }
+}
+
 @Composable
 @Preview
 fun PreviewCheckBox() {
     JetpackComposeYDSTheme {
+        val context = LocalContext.current
+
         val sizeList = listOf(
             CheckBoxState.SizeState.Large,
             CheckBoxState.SizeState.Medium,
@@ -163,6 +191,14 @@ fun PreviewCheckBox() {
             CheckBoxState.SelectedState.NotSelected
         )
 
+        fun onCheck() {
+            Toast.makeText(
+                context,
+                "Click!",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
         Row(
             horizontalArrangement = Arrangement.SpaceAround,
             modifier = Modifier.fillMaxWidth(),
@@ -172,13 +208,22 @@ fun PreviewCheckBox() {
                     verticalArrangement = Arrangement.SpaceAround,
                 ) {
                     for (disabled in disabledList) {
-                        for (selected in selectedList)
-                            CheckBox(
+                        for (selected in selectedList) {
+
+                            var controlState by rememberCheckBoxState(
                                 text = "텍스트",
                                 activateState = disabled,
                                 selectedState = selected,
                                 sizeState = size
                             )
+
+                            CheckBox(
+                                controlState
+                            ) {
+                                controlState = controlState.updateStateOnToggle()
+                                onCheck()
+                            }
+                        }
                     }
                 }
             }

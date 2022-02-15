@@ -15,8 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
-import com.eggtart.jetpackcomposeyds.ui.theme.atom.CheckBox
-import com.eggtart.jetpackcomposeyds.ui.theme.atom.CheckBoxState
+//import com.eggtart.jetpackcomposeyds.ui.theme.atom.CheckBox
+//import com.eggtart.jetpackcomposeyds.ui.theme.atom.CheckBoxState
 
 data class PersonData(
     var name: String,
@@ -29,20 +29,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             JetpackComposeYDSTheme {
-                Column {
-                    CheckBox(
-                        text = "Hello world 1",
-                        activateState = CheckBoxState.ActivateState.Disabled,
-                        selectedState = CheckBoxState.SelectedState.Selected,
-                        sizeState = CheckBoxState.SizeState.Large
-                    )
-                    CheckBox(
-                        text = "Hello world 2",
-                        activateState = CheckBoxState.ActivateState.Enabled,
-                        selectedState = CheckBoxState.SelectedState.Selected,
-                        sizeState = CheckBoxState.SizeState.Large
-                    )
-                }
+
             }
         }
     }
