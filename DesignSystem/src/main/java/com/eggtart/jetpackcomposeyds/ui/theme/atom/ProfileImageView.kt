@@ -70,18 +70,18 @@ class SquircleShape : Shape {
         }
 }
 
-enum class ProfileImageViewSize(val dp: Dp) {
-    EXTRA_SMALL(32.dp),
-    SMALL(36.dp),
-    MEDIUM(48.dp),
-    LARGE(72.dp),
-    EXTRA_LARGE(96.dp),
+sealed class ProfileImageViewSize(val dp: Dp) {
+    object ExtraSmall : ProfileImageViewSize(32.dp)
+    object Small : ProfileImageViewSize(36.dp)
+    object Medium : ProfileImageViewSize(48.dp)
+    object Large : ProfileImageViewSize(72.dp)
+    object ExtraLarge : ProfileImageViewSize(96.dp)
 }
 
 @Composable
 fun ProfileImageView(
     @DrawableRes image: Int? = null,
-    size: ProfileImageViewSize = ProfileImageViewSize.EXTRA_LARGE
+    size: ProfileImageViewSize = ProfileImageViewSize.ExtraLarge
 ) {
     Image(
         contentScale = ContentScale.Crop,
@@ -107,11 +107,19 @@ fun ProfileImageView(
 )
 @Composable
 fun PreviewProfileImageView() {
+    val profileImageViewSizeList = listOf(
+        ProfileImageViewSize.ExtraLarge,
+        ProfileImageViewSize.Large,
+        ProfileImageViewSize.Medium,
+        ProfileImageViewSize.Small,
+        ProfileImageViewSize.ExtraSmall,
+    )
+
     JetpackComposeYDSTheme {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            for (i in ProfileImageViewSize.values()) {
+            for (i in profileImageViewSizeList) {
                 ProfileImageView(
                     size = i
                 )
