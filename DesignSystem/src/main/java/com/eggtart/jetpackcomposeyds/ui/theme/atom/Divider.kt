@@ -16,34 +16,35 @@ import com.eggtart.jetpackcomposeyds.ui.theme.foundation.BorderThin
 import com.eggtart.jetpackcomposeyds.ui.theme.rule.minWidth
 
 
-enum class Thickness(
+sealed class Thickness(
     val width: Dp,
     val color: Color,
 ) {
-    THIN(width = minWidth, color = BorderNormal),
-    THICK(width = 8.dp, color = BorderThin),
+    object Thin : Thickness(minWidth, BorderNormal)
+    object Thick : Thickness(8.dp, BorderThin)
+
 }
 
 
-enum class Direction {
-    HORIZONTAL,
-    VERTICAL
+sealed class Direction {
+    object Horizontal : Direction()
+    object Vertical : Direction()
 }
 
 
 @Composable
 fun Divider(
-    thickness: Thickness = Thickness.THIN,
-    direction: Direction = Direction.HORIZONTAL,
+    thickness: Thickness = Thickness.Thin,
+    direction: Direction = Direction.Horizontal,
 ) {
     when (direction) {
-        Direction.HORIZONTAL -> {
+        Direction.Horizontal -> {
             Divider(
                 color = thickness.color,
                 thickness = thickness.width
             )
         }
-        Direction.VERTICAL -> {
+        Direction.Vertical -> {
             Divider(
                 color = thickness.color,
                 modifier = Modifier
@@ -67,16 +68,16 @@ fun PreviewDividerHorizontal() {
 
             // use the material divider
             Divider(
-                thickness = Thickness.THIN,
-                direction = Direction.HORIZONTAL
+                thickness = Thickness.Thin,
+                direction = Direction.Horizontal
             )
 
             Text("two", Modifier.padding(4.dp))
 
             // or replace it with a custom one
             Divider(
-                thickness = Thickness.THICK,
-                direction = Direction.HORIZONTAL
+                thickness = Thickness.Thick,
+                direction = Direction.Horizontal
             )
 
             Text("three", Modifier.padding(4.dp))
@@ -84,9 +85,7 @@ fun PreviewDividerHorizontal() {
     }
 }
 
-@Preview(
-    showSystemUi = true,
-)
+@Preview
 @Composable
 fun PreviewDividerVertical() {
     JetpackComposeYDSTheme {
@@ -97,16 +96,16 @@ fun PreviewDividerVertical() {
 
             // use the material divider
             Divider(
-                thickness = Thickness.THIN,
-                direction = Direction.VERTICAL
+                thickness = Thickness.Thin,
+                direction = Direction.Vertical
             )
 
             Text("two", Modifier.padding(4.dp))
 
             // or replace it with a custom one
             Divider(
-                thickness = Thickness.THICK,
-                direction = Direction.VERTICAL
+                thickness = Thickness.Thick,
+                direction = Direction.Vertical
             )
 
             Text("three", Modifier.padding(4.dp))

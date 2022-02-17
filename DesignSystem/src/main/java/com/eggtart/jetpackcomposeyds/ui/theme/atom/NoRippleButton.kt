@@ -41,6 +41,7 @@ fun NoRippleButton(
         enabled = enabled,
         role = Role.Button,
         interactionSource = interactionSource,
+        indication = null
     ) {
         CompositionLocalProvider(LocalContentAlpha provides contentColor.alpha) {
             ProvideTextStyle(

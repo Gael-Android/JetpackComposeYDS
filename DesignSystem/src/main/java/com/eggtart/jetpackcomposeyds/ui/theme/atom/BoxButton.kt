@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ButtonDefaults.buttonColors
 import androidx.compose.material.ButtonDefaults.elevation
+import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -32,19 +34,19 @@ import com.eggtart.jetpackcomposeyds.ui.theme.foundation.IconSize
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.YdsIcon
 
 data class BoxButtonState(
-    val text: String,
-    @DrawableRes val leftIcon: Int?,
-    @DrawableRes val rightIcon: Int?,
-    val typeState: TypeState,
-    val buttonState: ButtonState,
-    val sizeState: SizeState,
-    val roundingState: RoundingState,
-    val interactionSource: MutableInteractionSource
+    val text: String = "",
+    @DrawableRes val leftIcon: Int? = null,
+    @DrawableRes val rightIcon: Int? = null,
+    val typeState: TypeState = TypeState.Filled,
+    val buttonState: ButtonState = ButtonState.Enabled,
+    val sizeState: SizeState = SizeState.ExtraLarge,
+    val roundingState: RoundingState = RoundingState.Eight,
+    val interactionSource: MutableInteractionSource = MutableInteractionSource()
 ) {
     val isPressed
         @Composable get() = interactionSource.collectIsPressedAsState().value
 
-    val isEnabled = buttonState == ButtonState.Enabled
+    val isEnabled = buttonState != ButtonState.Disabled
     val isLine = typeState == TypeState.Line
     val rounding = roundingState.value
 
@@ -77,9 +79,9 @@ data class BoxButtonState(
     val backgroundColor
         @Composable get() = when (typeState) {
             TypeState.Filled -> when (buttonState) {
-                ButtonState.Enabled -> YdsTheme.colors.buttonPoint.maybePressedColor()
+                ButtonState.Enabled -> YdsTheme.colors.buttonPoint.maybePressed()
                 ButtonState.Disabled -> YdsTheme.colors.buttonPoint
-                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressedColor()
+                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressed()
             }
             TypeState.Tinted -> when (buttonState) {
                 ButtonState.Enabled -> YdsTheme.colors.buttonPointBG
@@ -93,14 +95,14 @@ data class BoxButtonState(
         @Composable get() = when (typeState) {
             TypeState.Filled -> YdsTheme.colors.buttonReversed
             TypeState.Tinted -> when (buttonState) {
-                ButtonState.Enabled -> YdsTheme.colors.buttonPoint.maybePressedColor()
+                ButtonState.Enabled -> YdsTheme.colors.buttonPoint.maybePressed()
                 ButtonState.Disabled -> YdsTheme.colors.buttonDisabled
-                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressedColor()
+                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressed()
             }
             TypeState.Line -> when (buttonState) {
-                ButtonState.Enabled -> YdsTheme.colors.buttonPoint.maybePressedColor()
+                ButtonState.Enabled -> YdsTheme.colors.buttonPoint.maybePressed()
                 ButtonState.Disabled -> YdsTheme.colors.buttonDisabled
-                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressedColor()
+                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressed()
             }
         }
 
@@ -109,7 +111,7 @@ data class BoxButtonState(
             TypeState.Filled, TypeState.Tinted -> when (buttonState) {
                 ButtonState.Enabled -> YdsTheme.colors.buttonDisabledBG
                 ButtonState.Disabled -> YdsTheme.colors.buttonDisabledBG
-                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressedColor()
+                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressed()
             }
             TypeState.Line -> YdsTheme.colors.bgNormal
         }
@@ -122,12 +124,12 @@ data class BoxButtonState(
             }
             TypeState.Tinted -> when (buttonState) {
                 ButtonState.Enabled, ButtonState.Disabled -> YdsTheme.colors.buttonDisabled
-                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressedColor()
+                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressed()
             }
             TypeState.Line -> when (buttonState) {
-                ButtonState.Enabled -> YdsTheme.colors.buttonPoint.maybePressedColor()
+                ButtonState.Enabled -> YdsTheme.colors.buttonPoint.maybePressed()
                 ButtonState.Disabled -> YdsTheme.colors.buttonDisabled
-                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressedColor()
+                ButtonState.Warned -> YdsTheme.colors.buttonWarned.maybePressed()
             }
         }
 
@@ -159,11 +161,12 @@ data class BoxButtonState(
     fun Color.toPressedColor(): Color = when (this) {
         YdsTheme.colors.buttonPoint -> YdsTheme.colors.buttonPointPressed
         YdsTheme.colors.buttonWarned -> YdsTheme.colors.buttonWarnedPressed
+        YdsTheme.colors.buttonNormal -> YdsTheme.colors.buttonNormalPressed
         else -> this
     }
 
     @Composable
-    fun Color.maybePressedColor() =
+    fun Color.maybePressed() =
         if (isPressed) {
             this.toPressedColor()
         } else {
@@ -211,8 +214,7 @@ fun BoxButton(
         },
         modifier = Modifier
             .height(boxButtonState.height)
-            .padding(horizontal = boxButtonState.horizontalPadding)
-        ,
+            .padding(horizontal = boxButtonState.horizontalPadding),
         enabled = boxButtonState.isEnabled,
         elevation = elevation(
             defaultElevation = 0.dp,
@@ -244,7 +246,7 @@ fun BoxButton(
             )
             Spacer(
                 modifier = Modifier.padding(
-                    end = 4.dp
+                    end = YdsTheme.spacing.four
                 )
             )
         }
@@ -255,7 +257,7 @@ fun BoxButton(
         if (boxButtonState.leftIcon == null && boxButtonState.rightIcon != null) {
             Spacer(
                 modifier = Modifier.padding(
-                    end = 4.dp
+                    end = YdsTheme.spacing.four
                 )
             )
             YdsIcon(
