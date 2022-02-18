@@ -23,6 +23,7 @@ data class ToggleState(
     val selectedState: SelectedState = SelectedState.Selected
 ) {
     val isSelected = selectedState == SelectedState.Selected
+    val isEnabled = activateState == ActivateState.Enabled
 
     sealed class ActivateState {
         object Disabled : ActivateState()
@@ -105,7 +106,8 @@ fun Toggle(
             )
             .clickable(
                 interactionSource = MutableInteractionSource(),
-                indication = null
+                indication = null,
+                enabled = toggleState.isEnabled
             ) {
                 onToggle()
             }
@@ -128,7 +130,7 @@ fun Toggle(
 @Composable
 fun PreviewToggle() {
     var state by rememberToggleState(
-        activateState = ToggleState.ActivateState.Enabled,
+        activateState = ToggleState.ActivateState.Disabled,
         selectedState = ToggleState.SelectedState.NotSelected
     )
 
