@@ -17,8 +17,6 @@ val fonts = FontFamily(
     Font(R.font.spoqa_han_sans_neo_bold, weight = FontWeight.Bold),
 )
 
-// TODO: 2021-12-12 figma에는 dp라고 나와있는데 그냥 sp라고 씀
-
 @Composable
 fun dpToSp(dp: Dp) = with(LocalDensity.current) { dp.toSp() }
 
