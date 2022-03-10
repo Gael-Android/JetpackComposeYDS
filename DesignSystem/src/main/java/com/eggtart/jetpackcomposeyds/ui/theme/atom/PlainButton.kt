@@ -12,7 +12,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults.textButtonColors
 import androidx.compose.material.Text
-import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -122,7 +121,8 @@ fun PlainButton(
     NoRippleTextButton(
         onClick = onClick,
         enabled = plainButtonState.isEnabled,
-        colors = textButtonColors(contentColor = plainButtonState.contentColor)
+        colors = textButtonColors(contentColor = plainButtonState.contentColor),
+        interactionSource = plainButtonState.interactionSource
     ) {
         if (plainButtonState.leftIcon != null) {
             YdsIcon(

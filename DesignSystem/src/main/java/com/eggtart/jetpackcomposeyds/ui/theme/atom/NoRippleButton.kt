@@ -49,10 +49,10 @@ fun NoRippleButton(
             ) {
                 Row(
                     Modifier
-                        .defaultMinSize(
-                            minWidth = ButtonDefaults.MinWidth,
-                            minHeight = ButtonDefaults.MinHeight
-                        )
+//                        .defaultMinSize(
+//                            minWidth = ButtonDefaults.MinWidth,
+//                            minHeight = ButtonDefaults.MinHeight
+//                        )
                         .padding(contentPadding),
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,

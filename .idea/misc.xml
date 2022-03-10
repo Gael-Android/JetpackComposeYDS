@@ -3,7 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/badge_background.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/bottom_sheet_background.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/box_button_background_4.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/ic_adbadge_filled.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/ic_adbadge_line.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/ic_arrow_down_line.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/ic_arrow_right_line.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/ic_bell_line.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/ic_book_filled.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/ic_clip_line.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/ic_home_filled.xml" value="0.1615" />
         <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1824074074074074" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/text_field_background.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/text_field_cursor.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/text_field_negative_background.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/text_field_positive_background.xml" value="0.1615" />
+        <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable-v24/toast_background.xml" value="0.1615" />
         <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable/ic_adbadge_filled.xml" value="0.1935185185185185" />
         <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable/ic_checkcircle_filled.xml" value="0.14814814814814814" />
         <entry key="..\:/Users/kwkun/AndroidStudioProjects/JetpackComposeYDS/DesignSystem/src/main/res/drawable/ic_ground_filled.xml" value="0.18518518518518517" />

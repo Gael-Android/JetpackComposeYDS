@@ -1,5 +1,7 @@
 package com.eggtart.jetpackcomposeyds.ui.theme
 
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.LocalMinimumTouchTargetEnforcement
 import androidx.compose.material.Shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -39,6 +41,7 @@ object YdsTheme {
 }
 
 // provider
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun YdsTheme(
     colors: YdsColors = YdsTheme.colors,
@@ -56,6 +59,7 @@ fun YdsTheme(
         LocalRounding provides rounding,
         LocalBoarder provides boarder,
         LocalSpacing provides spacing,
+        LocalMinimumTouchTargetEnforcement provides false, // Jetpack compose 1.1.0 에서의 최소터치크기(48.dp * 48.dp) 제한을 풉니다
         LocalDensity provides Density(
             // 시스템 fontSize 설정을 무시하는 유일한 방법은 밀도 개체를 재정의하고 fontScale을 1f로 설정하는 것입니다.
             // 그러나 이것은 강력히 권장하지 않으며 가능하면 Sp대신 사용하십시오 .
