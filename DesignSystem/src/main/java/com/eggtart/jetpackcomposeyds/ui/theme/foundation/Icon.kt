@@ -23,12 +23,15 @@ fun YdsIcon(
     @DrawableRes id: Int,
     iconSize: IconSize,
     tint: Color,
+    modifier: Modifier = Modifier,
 ) {
     Icon(
         imageVector = ImageVector
             .vectorResource(id = id),
         contentDescription = "$id",
-        modifier = Modifier.size(iconSize.value),
+        modifier = Modifier
+            .size(iconSize.value)
+            .then(modifier),
         tint = tint
     )
 }
