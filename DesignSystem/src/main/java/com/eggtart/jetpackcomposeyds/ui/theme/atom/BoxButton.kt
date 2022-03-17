@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.eggtart.jetpackcomposeyds.R
 import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
+import com.eggtart.jetpackcomposeyds.ui.theme.base.NoRippleButton
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.IconSize
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.YdsIcon
 

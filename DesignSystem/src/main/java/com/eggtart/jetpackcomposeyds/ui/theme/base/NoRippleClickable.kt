@@ -1,4 +1,4 @@
-package com.eggtart.jetpackcomposeyds.ui.theme.atom
+package com.eggtart.jetpackcomposeyds.ui.theme.base
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

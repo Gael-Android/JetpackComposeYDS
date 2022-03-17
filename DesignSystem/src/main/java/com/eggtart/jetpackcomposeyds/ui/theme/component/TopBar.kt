@@ -23,7 +23,6 @@ fun TopBar(
     actions: @Composable RowScope.() -> Unit = {},
 ) {
     TopAppBar(
-
         modifier = Modifier
             .fillMaxWidth()
             .height(56.dp),
@@ -82,6 +81,7 @@ fun PreviewTopBar() {
                 title = "타이틀",
                 navigationIcon = {
                     TopBarButton {
+
                     }
                 },
                 actions = {

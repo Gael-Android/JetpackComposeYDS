@@ -3,6 +3,7 @@ package com.eggtart.jetpackcomposeyds.ui.theme.foundation
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
+import androidx.compose.material.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +23,7 @@ sealed class IconSize(val value: Dp) {
 fun YdsIcon(
     @DrawableRes id: Int,
     iconSize: IconSize,
-    tint: Color,
+    tint: Color = LocalContentColor.current,
     modifier: Modifier = Modifier,
 ) {
     Icon(

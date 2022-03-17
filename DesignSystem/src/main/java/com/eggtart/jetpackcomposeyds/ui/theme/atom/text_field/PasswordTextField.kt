@@ -1,29 +1,27 @@
-package com.eggtart.jetpackcomposeyds.ui.theme.atom
+package com.eggtart.jetpackcomposeyds.ui.theme.atom.text_field
 
-import android.widget.Toast
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.eggtart.jetpackcomposeyds.R
 import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
+import com.eggtart.jetpackcomposeyds.ui.theme.base.noRippleClickable
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.IconSize
 import com.eggtart.jetpackcomposeyds.ui.theme.foundation.YdsIcon
 
-data class SimpleTextFieldState(
+data class PasswordTextFieldState(
     val fieldLabelText: String = "",
     val placeHolderText: String = "",
     val helperLabelText: String = "",
@@ -32,17 +30,9 @@ data class SimpleTextFieldState(
     val eventState: EventState = EventState.None,
     val interactionSource: MutableInteractionSource = MutableInteractionSource(),
 ) {
-    val isErorr = if (eventState == EventState.Negative) {
-        true
-    } else {
-        false
-    }
+    val isError = eventState == EventState.Negative
 
-    val isEnabled = if (activateState == ActivateState.Enabled) {
-        true
-    } else {
-        false
-    }
+    val isEnabled = activateState == ActivateState.Enabled
 
     val isFocused
         @Composable get() = interactionSource.collectIsFocusedAsState().value
@@ -87,6 +77,16 @@ data class SimpleTextFieldState(
         object Negative : EventState()
     }
 
+    sealed class VisibilityState {
+        object Hide : VisibilityState()
+        object Show : VisibilityState()
+
+        fun toggle() = when (this) {
+            Hide -> Show
+            Show -> Hide
+        }
+    }
+
     fun updateText(text: String) = copy(text = text)
 
     fun emptyText() = copy(text = "")
@@ -99,13 +99,13 @@ data class SimpleTextFieldState(
 }
 
 @Composable
-fun rememberSimpleTextField(
+fun rememberPasswordTextFieldState(
     fieldLabelText: String = "",
     placeHolderText: String = "",
     helperLabelText: String = "",
     text: String = "",
-    activateState: SimpleTextFieldState.ActivateState = SimpleTextFieldState.ActivateState.Enabled,
-    eventState: SimpleTextFieldState.EventState = SimpleTextFieldState.EventState.None,
+    activateState: PasswordTextFieldState.ActivateState = PasswordTextFieldState.ActivateState.Enabled,
+    eventState: PasswordTextFieldState.EventState = PasswordTextFieldState.EventState.None,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) = remember(
     fieldLabelText,
@@ -117,7 +117,7 @@ fun rememberSimpleTextField(
     interactionSource
 ) {
     mutableStateOf(
-        SimpleTextFieldState(
+        PasswordTextFieldState(
             fieldLabelText,
             placeHolderText,
             helperLabelText,
@@ -129,79 +129,96 @@ fun rememberSimpleTextField(
     )
 }
 
+
 @Composable
-fun SimpleTextField(
-    simpleTextFieldState: SimpleTextFieldState,
+fun PasswordTextField(
+    passwordTextFieldState: PasswordTextFieldState,
     onValueChange: (String) -> Unit,
-    onX: () -> Unit,
-    validate: () -> Unit
+    validate: () -> Unit,
 ) {
+    var isHide by remember {
+        mutableStateOf(true)
+    }
+
     YdsTheme.colors.run {
         Column {
             Text(
-                text = simpleTextFieldState.fieldLabelText,
-                color = simpleTextFieldState.labelColor,
+                text = passwordTextFieldState.fieldLabelText,
+                color = passwordTextFieldState.labelColor,
                 style = YdsTheme.typography.SubTitle3
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             OutlinedTextField(
-                value = simpleTextFieldState.text,
-                onValueChange = onValueChange,
+                value = passwordTextFieldState.text,
+                onValueChange = {
+                    onValueChange(it)
+                    validate()
+                },
+                modifier = Modifier
+                    .width(350.dp)
+                    .height(48.dp),
                 singleLine = true,
                 shape = RoundedCornerShape(8.dp),
-                isError = simpleTextFieldState.isErorr,
-                enabled = simpleTextFieldState.isEnabled,
-                interactionSource = simpleTextFieldState.interactionSource,
+                isError = passwordTextFieldState.isError,
+                enabled = passwordTextFieldState.isEnabled,
+                interactionSource = passwordTextFieldState.interactionSource,
                 placeholder = {
-                    Text(text = simpleTextFieldState.placeHolderText)
+                    Text(
+                        text = passwordTextFieldState.placeHolderText,
+                        style = YdsTheme.typography.Body1
+                    )
                 },
+                visualTransformation = if (isHide) PasswordVisualTransformation() else VisualTransformation.None,
                 textStyle = YdsTheme.typography.Body1,
                 trailingIcon = {
-                    if (simpleTextFieldState.isTyping) {
+                    if (passwordTextFieldState.isTyping) {
                         YdsIcon(
-                            id = R.drawable.ic_x_line,
-                            iconSize = IconSize.ExtraSmall,
-                            tint = buttonNormal,
+                            id = if (isHide) {
+                                R.drawable.ic_eyeclosed_line
+                            } else {
+                                R.drawable.ic_eyeopen_line
+                            },
+                            iconSize = IconSize.Medium,
                             modifier = Modifier.noRippleClickable {
-                                onX()
+                                isHide = !isHide
                             }
                         )
                     }
                 },
-                keyboardActions = KeyboardActions {
-                    validate()
-                },
-                colors = outlinedTextFieldColors(
+//                keyboardActions = KeyboardActions {
+//                    validate()
+//                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
                     textColor = textSecondary,
                     disabledTextColor = textDisabled,
                     backgroundColor = inputFieldElevated,
                     cursorColor = textPointed,
                     errorCursorColor = textPointed,
-                    focusedBorderColor = simpleTextFieldState.boarderColor,
-                    unfocusedBorderColor = simpleTextFieldState.boarderColor,
+                    focusedBorderColor = passwordTextFieldState.boarderColor,
+                    unfocusedBorderColor = passwordTextFieldState.boarderColor,
                     disabledBorderColor = Color.Transparent,
                     errorBorderColor = textWarned,
                     leadingIconColor = Color.Transparent,
                     disabledLeadingIconColor = Color.Transparent,
                     errorLeadingIconColor = Color.Transparent,
-                    trailingIconColor = Color.Transparent,
+                    trailingIconColor = buttonNormal,
                     disabledTrailingIconColor = Color.Transparent,
-                    errorTrailingIconColor = Color.Transparent,
+                    errorTrailingIconColor = buttonNormal,
                     focusedLabelColor = Color.Transparent,
                     unfocusedLabelColor = Color.Transparent,
                     disabledLabelColor = Color.Transparent,
                     errorLabelColor = Color.Transparent,
                     placeholderColor = textTertiary,
-                    disabledPlaceholderColor = textDisabled
+                    disabledPlaceholderColor = textDisabled,
                 )
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                simpleTextFieldState.helperLabelText,
+                passwordTextFieldState.helperLabelText,
                 modifier = Modifier.padding(horizontal = 8.dp),
-                color = simpleTextFieldState.helperColor,
+                color = passwordTextFieldState.helperColor,
                 style = YdsTheme.typography.Caption1
             )
         }
@@ -210,44 +227,37 @@ fun SimpleTextField(
 
 }
 
-
 @Preview
 @Composable
 private fun Preview() {
     val context = LocalContext.current
 
-    var state by rememberSimpleTextField(
+    var state by rememberPasswordTextFieldState(
         fieldLabelText = "필드 라벨 텍스트",
         placeHolderText = "플레이스 홀더",
-        helperLabelText = "도움말 텍스트",
+        helperLabelText = "도움말 텍스트"
     )
 
     fun validate() {
-        if (state.text == "ok") {
-            state = state.toPositive()
-        } else if (state.text == "bad") {
-            state = state.toNegative()
-        } else {
-            state = state.toNone()
+        state = when (state.text) {
+            "ok" -> {
+                state.toPositive()
+            }
+            "bad" -> {
+                state.toNegative()
+            }
+            else -> {
+                state.toNone()
+            }
         }
     }
 
-    SimpleTextField(
-        simpleTextFieldState = state,
+    PasswordTextField(
+        passwordTextFieldState = state,
         onValueChange = {
             state = state.updateText(it)
         },
-        onX = {
-            Toast.makeText(
-                context,
-                "Erase!",
-                Toast.LENGTH_SHORT
-            ).show()
-            state = state.emptyText()
-        },
-        validate = {
-            validate()
-        }
-    )
+    ) {
+        validate()
+    }
 }
-

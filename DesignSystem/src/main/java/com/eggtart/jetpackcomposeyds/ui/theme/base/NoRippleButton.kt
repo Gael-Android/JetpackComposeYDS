@@ -1,4 +1,4 @@
-package com.eggtart.jetpackcomposeyds.ui.theme.atom
+package com.eggtart.jetpackcomposeyds.ui.theme.base
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
