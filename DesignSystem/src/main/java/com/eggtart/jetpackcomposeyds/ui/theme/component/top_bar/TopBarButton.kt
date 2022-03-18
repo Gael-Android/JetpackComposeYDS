@@ -1,4 +1,4 @@
-package com.eggtart.jetpackcomposeyds.ui.theme.component
+package com.eggtart.jetpackcomposeyds.ui.theme.component.top_bar
 
 import android.widget.Toast
 import androidx.annotation.DrawableRes
