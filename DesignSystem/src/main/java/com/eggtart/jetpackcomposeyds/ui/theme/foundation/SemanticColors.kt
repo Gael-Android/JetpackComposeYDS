@@ -1,71 +1,364 @@
 package com.eggtart.jetpackcomposeyds.ui.theme.foundation
 
-val BgNormal = White000
-val BgElevated = White000
-val BgRecomment = Gray050
-val BgSelected = Gray100
-val BgPressed = Gray100
-val BgNormalReversed = RealBlack
-val BgElevatedReversed = RealBlack
-val TextPrimary = Black000
-val TextSecondary = Gray900
-val TextTertiary = Gray600
-val TextDisabled = Gray500
-val TextReversed = White000
-val TextPointed = PointColor400
-val TextWarned = WarningRed400
-val DimNormal = Gray900A30
-val DimThick = Gray900A70
-val DimThickReversed = White000A70
-val BorderThin = Gray100
-val BorderNormal = Black000A10
-val BorderThick = Gray500
-val ButtonNormal = Gray700
-val ButtonNormalPressed = Gray600
-val ButtonBG = Gray200
-val ButtonEmojiBG = Gray100
-val ButtonReversed = White000
-val ButtonDisabled = Gray500
-val ButtonDisabledBG = Gray200
-val ButtonPoint = PointColor400
-val ButtonPointPressed = PointColor300
-val ButtonPointBG = PointColor050
-val ButtonWarned = WarningRed400
-val ButtonWarnedPressed = WarningRed300
-val ButtonWarnedBG = WarningRed050
-val BottomBarNormal = Gray600
-val BottomBarSelected = Gray800
-val InputFieldNormal = White000
-val InputFieldElevated = Gray100
-val ToastBG = Gray700
-val Pressed = Black000A10
-val ShadowThin = Gray400
-val ShadowNormal = Gray500
-val MonoItemPrimary = Gray700
-val MonoItemBG = Gray100
-val MonoItemText = Gray800
-val GreenItemPrimary = Green300
-val GreenItemBG = Green050
-val GreenItemText = Green800
-val EmeraldItemPrimary = Emerald300
-val EmeraldItemBG = Emerald050
-val EmeraldItemText = Emerald800
-val AquaItemPrimary = Aqua300
-val AquaItemBG = Aqua050
-val AquaItemText = Aqua700
-val BlueItemPrimary = Blue300
-val BlueItemBG = Blue050
-val BlueItemText = Blue700
-val IndigoItemPrimary = Indigo300
-val IndigoItemBG = Indigo050
-val IndigoItemText = Indigo400
-val VioletItemPrimary = Violet300
-val VioletItemBG = Violet050
-val VioletItemText = Violet400
-val PurpleItemPrimary = Purple300
-val PurpleItemBG = Purple050
-val PurpleItemText = Purple400
-val PinkItemPrimary = Pink300
-val PinkItemBG = Pink050
-val PinkItemText = Pink600
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
 
+data class ColorScheme(
+    // Background
+    val bgNormal: Color,
+    val bgElevated: Color,
+    val bgRecomment: Color,
+    val bgSelected: Color,
+    val bgPressed: Color,
+    val bgNormalDark: Color,
+    val bgElevatedDark: Color,
+
+    // Text
+    val textPrimary: Color,
+    val textSecondary: Color,
+    val textTertiary: Color,
+    val textDisabled: Color,
+    val textBright: Color,
+    val textPointed: Color,
+    val textWarned: Color,
+
+    // Dim
+
+    val dimNormal: Color,
+    val dimThick: Color,
+    val dimThickBright: Color,
+
+    // Border
+    val borderThin: Color,
+    val borderNormal: Color,
+    val borderThick: Color,
+
+    // Button
+    val buttonNormal: Color,
+    val buttonNormalPressed: Color,
+    val buttonBG: Color,
+    val buttonEmojiBG: Color,
+    val buttonBright: Color,
+    val buttonDisabled: Color,
+    val buttonDisabledBG: Color,
+    val buttonPoint: Color,
+    val buttonPointPressed: Color,
+    val buttonPointBG: Color,
+    val buttonWarned: Color,
+    val buttonWarnedPressed: Color,
+    val buttonWarnedBG: Color,
+
+    // BottomBar
+    val bottomBarNormal: Color,
+    val bottomBarSelected: Color,
+
+    // InputField
+    val inputFieldNormal: Color,
+    val inputFieldElevated: Color,
+
+
+    // Toast
+    val toastBG: Color,
+
+
+    // Tooltip
+    val tooltipBG: Color,
+    val tooltipPoint: Color,
+
+    // Pressed
+    val pressed: Color,
+
+    // Shadow
+    val shadowThin: Color,
+    val shadowNormal: Color,
+
+    // MonoItem
+    val monoItemPrimary: Color,
+    val monoItemBG: Color,
+    val monoItemText: Color,
+
+    // LimeTag
+    val limeItemPrimary: Color,
+    val limeItemBG: Color,
+
+    // GreenItem
+    val greenItemPrimary: Color,
+    val greenItemBG: Color,
+    val greenItemText: Color,
+
+    // EmeraldItem
+    val emeraldItemPrimary: Color,
+    val emeraldItemBG: Color,
+    val emeraldItemText: Color,
+
+
+    // AquaItem
+    val aquaItemPrimary: Color,
+    val aquaItemBG: Color,
+    val aquaItemText: Color,
+
+    // BlueItem
+    val blueItemPrimary: Color,
+    val blueItemBG: Color,
+    val blueItemText: Color,
+
+    // IndigoItem
+    val indigoItemPrimary: Color,
+    val indigoItemBG: Color,
+    val indigoItemText: Color,
+
+
+    // VioletItem
+    val violetItemPrimary: Color,
+    val violetItemBG: Color,
+    val violetItemText: Color,
+
+
+    // PurpleItem
+    val purpleItemPrimary: Color,
+    val purpleItemBG: Color,
+    val purpleItemText: Color,
+
+    // PinkItem
+    val pinkItemPrimary: Color,
+    val pinkItemBG: Color,
+    val pinkItemText: Color,
+)
+
+val lightThemeColors = ColorScheme(
+// Background
+    bgNormal = white000,
+    bgElevated = white000,
+    bgRecomment = gray050,
+    bgSelected = gray100,
+    bgPressed = gray100,
+    bgNormalDark = realBlack,
+    bgElevatedDark = realBlack,
+
+// Text
+    textPrimary = black000,
+    textSecondary = gray900,
+    textTertiary = gray600,
+    textDisabled = gray500,
+    textBright = white000,
+    textPointed = pointColor400,
+    textWarned = warningRed400,
+
+// Dim
+    dimNormal = gray100,
+    dimThick = gray900A70,
+    dimThickBright = white000A70,
+
+// Border
+    borderThin = gray100,
+    borderNormal = black000A10,
+    borderThick = gray500,
+
+// Button
+    buttonNormal = gray700,
+    buttonNormalPressed = gray600,
+    buttonBG = gray200,
+    buttonEmojiBG = gray100,
+    buttonBright = white000,
+    buttonDisabled = gray500,
+    buttonDisabledBG = gray200,
+    buttonPoint = pointColor400,
+    buttonPointPressed = pointColor300,
+    buttonPointBG = pointColor050,
+    buttonWarned = warningRed400,
+    buttonWarnedPressed = warningRed300,
+    buttonWarnedBG = warningRed050,
+
+// BottomBar
+    bottomBarNormal = gray600,
+    bottomBarSelected = gray800,
+
+// InputField
+    inputFieldNormal = white000,
+    inputFieldElevated = gray100,
+
+// Toast
+    toastBG = gray800,
+
+// Tooltip
+    tooltipBG = gray700,
+    tooltipPoint = pointColor400,
+
+// Pressed
+    pressed = black000A10,
+
+// Shadow
+    shadowThin = gray400,
+    shadowNormal = gray500,
+
+// MonoItem
+    monoItemPrimary = gray700,
+    monoItemBG = gray100,
+    monoItemText = gray800,
+
+// LimeTag
+    limeItemPrimary = lime300,
+    limeItemBG = lime050,
+//    val limeItemText = ???
+
+// GreenItem
+    greenItemPrimary = green300,
+    greenItemBG = green050,
+    greenItemText = green800,
+
+// EmeraldItem
+    emeraldItemPrimary = emerald300,
+    emeraldItemBG = emerald050,
+    emeraldItemText = emerald800,
+
+// AquaItem
+    aquaItemPrimary = aqua300,
+    aquaItemBG = aqua050,
+    aquaItemText = aqua700,
+
+// BlueItem
+    blueItemPrimary = blue300,
+    blueItemBG = blue050,
+    blueItemText = blue700,
+
+// IndigoItem
+    indigoItemPrimary = indigo300,
+    indigoItemBG = indigo050,
+    indigoItemText = indigo400,
+
+// VioletItem
+    violetItemPrimary = violet300,
+    violetItemBG = violet050,
+    violetItemText = violet400,
+
+// PurpleItem
+    purpleItemPrimary = purple300,
+    purpleItemBG = purple050,
+    purpleItemText = purple400,
+
+// PinkItem
+    pinkItemPrimary = pink300,
+    pinkItemBG = pink050,
+    pinkItemText = pink600,
+)
+
+val darkThemeColors = ColorScheme(
+    // Background
+    bgNormal = black000,
+    bgElevated = black000,
+    bgRecomment = realBlack,
+    bgSelected = gray900,
+    bgPressed = gray800,
+    bgNormalDark = realBlack,
+    bgElevatedDark = realBlack,
+
+// Text
+    textPrimary = gray100,
+    textSecondary = gray200,
+    textTertiary = gray600,
+    textDisabled = gray700,
+    textBright = white000,
+    textPointed = pointColor300,
+    textWarned = warningRed300,
+
+// Dim
+    dimNormal = gray900A30,
+    dimThick = gray900A70,
+    dimThickBright = white000A70,
+
+// Border
+    borderThin = gray900,
+    borderNormal = white000A10,
+    borderThick = gray500,
+
+// Button
+    buttonNormal = gray300,
+    buttonNormalPressed = gray200,
+    buttonBG = gray800,
+    buttonEmojiBG = gray900,
+    buttonBright = white000,
+    buttonDisabled = gray600,
+    buttonDisabledBG = gray800,
+    buttonPoint = pointColor400,
+    buttonPointPressed = pointColor300,
+    buttonPointBG = pointColor050,
+    buttonWarned = warningRed400,
+    buttonWarnedPressed = warningRed300,
+    buttonWarnedBG = warningRed050,
+
+// BottomBar
+    bottomBarNormal = gray600,
+    bottomBarSelected = gray200,
+
+// InputField
+    inputFieldNormal = black000,
+    inputFieldElevated = gray900,
+
+// Toast
+    toastBG = gray800,
+
+// Tooltip
+    tooltipBG = gray700,
+    tooltipPoint = pointColor400,
+
+// Pressed
+    pressed = black000A10,
+
+// Shadow
+    shadowThin = Color.Transparent,
+    shadowNormal = Color.Transparent,
+
+// MonoItem
+    monoItemPrimary = gray700,
+    monoItemBG = gray100,
+    monoItemText = gray800,
+
+// LimeTag
+    limeItemPrimary = lime300,
+    limeItemBG = lime050,
+//    limeItemText = ???
+
+// GreenItem
+    greenItemPrimary = green300,
+    greenItemBG = green050,
+    greenItemText = green800,
+
+// EmeraldItem
+    emeraldItemPrimary = emerald300,
+    emeraldItemBG = emerald050,
+    emeraldItemText = emerald800,
+
+// AquaItem
+    aquaItemPrimary = aqua300,
+    aquaItemBG = aqua050,
+    aquaItemText = aqua700,
+
+// BlueItem
+    blueItemPrimary = blue300,
+    blueItemBG = blue050,
+    blueItemText = blue700,
+
+// IndigoItem
+    indigoItemPrimary = indigo300,
+    indigoItemBG = indigo050,
+    indigoItemText = indigo400,
+
+// VioletItem
+    violetItemPrimary = violet300,
+    violetItemBG = violet050,
+    violetItemText = violet400,
+
+// PurpleItem
+    purpleItemPrimary = purple300,
+    purpleItemBG = purple050,
+    purpleItemText = purple400,
+
+// PinkItem
+    pinkItemPrimary = pink300,
+    pinkItemBG = pink050,
+    pinkItemText = pink600,
+)
+
+internal val LocalColors = staticCompositionLocalOf {
+    lightThemeColors
+}

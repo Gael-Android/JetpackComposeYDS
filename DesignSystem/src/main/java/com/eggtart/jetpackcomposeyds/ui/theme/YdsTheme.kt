@@ -1,5 +1,6 @@
 package com.eggtart.jetpackcomposeyds.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LocalMinimumTouchTargetEnforcement
 import androidx.compose.material.Shapes
@@ -8,16 +9,19 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Density
-import com.eggtart.jetpackcomposeyds.ui.theme.foundation.LocalTypography
-import com.eggtart.jetpackcomposeyds.ui.theme.foundation.YdsTypography
+import com.eggtart.jetpackcomposeyds.ui.theme.foundation.*
 import com.eggtart.jetpackcomposeyds.ui.theme.rule.*
 
 object YdsTheme {
 
-    val colors: YdsColors
+    val colors: ColorScheme
         @Composable
         @ReadOnlyComposable
-        get() = LocalColors.current
+        get() = if (isSystemInDarkTheme()) {
+            darkThemeColors
+        } else {
+            lightThemeColors
+        }
 
     val typography: YdsTypography
         @Composable
@@ -44,7 +48,7 @@ object YdsTheme {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun YdsTheme(
-    colors: YdsColors = YdsTheme.colors,
+    colors: ColorScheme = YdsTheme.colors,
     typography: YdsTypography = YdsTheme.typography,
     rounding: Shapes = YdsTheme.rounding,
     boarder: Boarder = YdsTheme.boarder,
