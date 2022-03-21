@@ -91,7 +91,7 @@ data class BoxButtonState(
 
     val contentColor
         @Composable get() = when (typeState) {
-            TypeState.Filled -> YdsTheme.colors.buttonReversed
+            TypeState.Filled -> YdsTheme.colors.buttonBright
             TypeState.Tinted -> when (buttonState) {
                 ButtonState.Enabled -> YdsTheme.colors.buttonPoint.maybePressed()
                 ButtonState.Disabled -> YdsTheme.colors.buttonDisabled
@@ -118,7 +118,7 @@ data class BoxButtonState(
         @Composable get() = when (typeState) {
             TypeState.Filled -> when (buttonState) {
                 ButtonState.Enabled, ButtonState.Disabled -> YdsTheme.colors.buttonDisabled
-                ButtonState.Warned -> YdsTheme.colors.buttonReversed
+                ButtonState.Warned -> YdsTheme.colors.buttonBright
             }
             TypeState.Tinted -> when (buttonState) {
                 ButtonState.Enabled, ButtonState.Disabled -> YdsTheme.colors.buttonDisabled

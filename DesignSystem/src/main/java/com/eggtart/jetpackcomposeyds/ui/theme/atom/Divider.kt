@@ -5,25 +5,20 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
-import com.eggtart.jetpackcomposeyds.ui.theme.foundation.BorderNormal
-import com.eggtart.jetpackcomposeyds.ui.theme.foundation.BorderThin
+import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.rule.minWidth
 
 
 sealed class Thickness(
     val width: Dp,
-    val color: Color,
 ) {
-    object Thin : Thickness(minWidth, BorderNormal)
-    object Thick : Thickness(8.dp, BorderThin)
-
+    object Thin : Thickness(minWidth)
+    object Thick : Thickness(8.dp)
 }
-
 
 sealed class Direction {
     object Horizontal : Direction()
@@ -39,13 +34,13 @@ fun Divider(
     when (direction) {
         Direction.Horizontal -> {
             Divider(
-                color = thickness.color,
+                color = YdsTheme.colors.borderNormal,
                 thickness = thickness.width
             )
         }
         Direction.Vertical -> {
             Divider(
-                color = thickness.color,
+                color = YdsTheme.colors.borderThin,
                 modifier = Modifier
                     .fillMaxHeight()
                     .width(thickness.width)

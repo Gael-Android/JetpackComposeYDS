@@ -145,7 +145,7 @@ val lightThemeColors = ColorScheme(
     textWarned = warningRed400,
 
 // Dim
-    dimNormal = gray100,
+    dimNormal = gray900A30,
     dimThick = gray900A70,
     dimThickBright = white000A70,
 

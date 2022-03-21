@@ -51,7 +51,7 @@ data class ToggleState(
 
     val thumbColor
         @Composable get() = when (activateState) {
-            ActivateState.Enabled -> YdsTheme.colors.buttonReversed
+            ActivateState.Enabled -> YdsTheme.colors.buttonBright
             ActivateState.Disabled -> YdsTheme.colors.buttonDisabled
         }
 

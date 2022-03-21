@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
-import com.eggtart.jetpackcomposeyds.ui.theme.foundation.Black000A10
+import com.eggtart.jetpackcomposeyds.ui.theme.foundation.black000A10
 
 //@Preview
 //@Composable
@@ -84,7 +84,7 @@ fun Picker(
     LazyColumn(
         modifier = Modifier
             .height((itemHeightDp * 7).dp)
-            .background(YdsTheme.colors.dimThickReversed)
+            .background(YdsTheme.colors.dimThickBright)
             .drawWithContent {
                 val width = drawContext.size.width
                 val startFraction = 0f
@@ -92,7 +92,7 @@ fun Picker(
 
                 drawContent()
                 drawLine(
-                    color = Black000A10.copy(alpha = 0.9f),
+                    color = black000A10.copy(alpha = 0.9f),
                     start = Offset(
                         width * startFraction,
                         itemHeight * 3F,
@@ -104,7 +104,7 @@ fun Picker(
                     strokeWidth = 0.34f
                 )
                 drawLine(
-                    color = Black000A10.copy(alpha = 0.9f),
+                    color = black000A10.copy(alpha = 0.9f),
                     start = Offset(
                         width * startFraction,
                         itemHeight * 4F,
