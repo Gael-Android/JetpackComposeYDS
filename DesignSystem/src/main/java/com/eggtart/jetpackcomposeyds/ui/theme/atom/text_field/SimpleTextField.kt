@@ -130,7 +130,7 @@ fun SimpleTextField(
             Text(
                 text = simpleTextFieldState.fieldLabelText,
                 color = simpleTextFieldState.labelColor,
-                style = YdsTheme.typography.SubTitle3
+                style = YdsTheme.typography.subTitle3
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -152,10 +152,10 @@ fun SimpleTextField(
                 placeholder = {
                     Text(
                         text = simpleTextFieldState.placeHolderText,
-                        style = YdsTheme.typography.Body1
+                        style = YdsTheme.typography.body1
                     )
                 },
-                textStyle = YdsTheme.typography.Body1,
+                textStyle = YdsTheme.typography.body1,
                 trailingIcon = {
                     if (simpleTextFieldState.isTyping) {
                         YdsIcon(
@@ -200,7 +200,7 @@ fun SimpleTextField(
                 simpleTextFieldState.helperLabelText,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 color = simpleTextFieldState.helperColor,
-                style = YdsTheme.typography.Caption1
+                style = YdsTheme.typography.caption1
             )
         }
     }

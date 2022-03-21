@@ -56,8 +56,8 @@ data class PlainButtonState(
 
     val typo
         @Composable get() = when (sizeState) {
-            SizeState.Large, SizeState.Medium -> YdsTheme.typography.Button3
-            SizeState.Small -> YdsTheme.typography.Button4
+            SizeState.Large, SizeState.Medium -> YdsTheme.typography.button3
+            SizeState.Small -> YdsTheme.typography.button4
         }
 
     val iconSize

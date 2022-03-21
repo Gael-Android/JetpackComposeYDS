@@ -4,7 +4,6 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.material.TextFieldDefaults.outlinedTextFieldColors
@@ -132,7 +131,7 @@ fun SuffixTextField(
             Text(
                 text = suffixTextFieldState.fieldLabelText,
                 color = suffixTextFieldState.labelColor,
-                style = YdsTheme.typography.SubTitle3
+                style = YdsTheme.typography.subTitle3
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -154,15 +153,15 @@ fun SuffixTextField(
                 placeholder = {
                     Text(
                         text = suffixTextFieldState.placeHolderText,
-                        style = YdsTheme.typography.Body1
+                        style = YdsTheme.typography.body1
                     )
                 },
-                textStyle = YdsTheme.typography.Body1,
+                textStyle = YdsTheme.typography.body1,
                 trailingIcon = {
                     Text(
                         text = suffixTextFieldState.suffixLabelText,
                         color = suffixTextFieldState.suffixLabelTextColor,
-                        style = YdsTheme.typography.Body1
+                        style = YdsTheme.typography.body1
                     )
                 },
 //                keyboardActions = KeyboardActions {
@@ -197,7 +196,7 @@ fun SuffixTextField(
                 suffixTextFieldState.helperLabelText,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 color = suffixTextFieldState.helperColor,
-                style = YdsTheme.typography.Caption1
+                style = YdsTheme.typography.caption1
             )
         }
     }

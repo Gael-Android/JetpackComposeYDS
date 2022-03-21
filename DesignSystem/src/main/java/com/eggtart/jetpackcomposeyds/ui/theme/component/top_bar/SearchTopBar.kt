@@ -4,9 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.atom.text_field.SearchTextField
 import com.eggtart.jetpackcomposeyds.ui.theme.atom.text_field.SearchTextFieldState

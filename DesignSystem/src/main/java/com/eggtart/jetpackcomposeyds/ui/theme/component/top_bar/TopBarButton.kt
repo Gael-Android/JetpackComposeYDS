@@ -47,7 +47,7 @@ data class TopBarButtonState(
             val text: String = "",
         ) : ContentState() {
             val typo: TextStyle
-                @Composable get() = YdsTheme.typography.Button0
+                @Composable get() = YdsTheme.typography.button0
         }
     }
 

@@ -1,7 +1,8 @@
 package com.eggtart.jetpackcomposeyds.ui.theme.component.top_bar
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Alignment.Companion.TopCenter
@@ -52,7 +53,7 @@ fun TopBar(
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     text = title,
-                    style = YdsTheme.typography.SubTitle2,
+                    style = YdsTheme.typography.subTitle2,
                     color = YdsTheme.colors.textPrimary
                 )
             }

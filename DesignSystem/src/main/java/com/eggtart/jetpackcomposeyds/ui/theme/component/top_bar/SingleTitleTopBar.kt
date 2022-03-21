@@ -1,13 +1,11 @@
 package com.eggtart.jetpackcomposeyds.ui.theme.component.top_bar
 
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +35,7 @@ fun SingleTitleTopBar(
                 maxLines = 1,
                 modifier = Modifier.padding(16.dp, 17.dp, 16.dp, 8.dp),
                 text = title,
-                style = YdsTheme.typography.Title2,
+                style = YdsTheme.typography.title2,
                 color = YdsTheme.colors.textPrimary
             )
 

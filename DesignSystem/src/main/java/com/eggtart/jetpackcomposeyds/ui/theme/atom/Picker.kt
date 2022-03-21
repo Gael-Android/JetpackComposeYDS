@@ -131,7 +131,7 @@ fun Picker(
                 item,
                 modifier = Modifier
                     .padding(horizontal = 20.dp, vertical = 4.dp),
-                style = YdsTheme.typography.Body1,
+                style = YdsTheme.typography.body1,
                 color = if (index == lazyListState.firstVisibleItemIndex) {
                     YdsTheme.colors.textPrimary
                 } else {

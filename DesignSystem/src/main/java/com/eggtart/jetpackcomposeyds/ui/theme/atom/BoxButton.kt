@@ -57,9 +57,9 @@ data class BoxButtonState(
 
     val typo
         @Composable get() = when (sizeState) {
-            SizeState.ExtraLarge -> YdsTheme.typography.Button1
-            SizeState.Large, SizeState.Medium -> YdsTheme.typography.Button2
-            SizeState.Small -> YdsTheme.typography.Button4
+            SizeState.ExtraLarge -> YdsTheme.typography.button1
+            SizeState.Large, SizeState.Medium -> YdsTheme.typography.button2
+            SizeState.Small -> YdsTheme.typography.button4
         }
 
     val iconSize
@@ -131,10 +131,10 @@ data class BoxButtonState(
             }
         }
 
-    sealed class TypeState {
-        object Filled : TypeState() // 가장 중요한 버튼에 사용합니다. 남용을 지양해주세요.
-        object Tinted : TypeState() // 어중간하게 중요한 버튼에 사용합니다.
-        object Line : TypeState() // 덜 중요한 버튼에 사용합니다.
+    sealed interface TypeState {
+        object Filled : TypeState // 가장 중요한 버튼에 사용합니다. 남용을 지양해주세요.
+        object Tinted : TypeState // 어중간하게 중요한 버튼에 사용합니다.
+        object Line : TypeState // 덜 중요한 버튼에 사용합니다.
     }
 
     sealed class SizeState {

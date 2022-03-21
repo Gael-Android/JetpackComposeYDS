@@ -43,14 +43,14 @@ fun DoubleTitleTopBar(
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     text = subtitle,
-                    style = YdsTheme.typography.Body2,
+                    style = YdsTheme.typography.body2,
                     color = YdsTheme.colors.textPrimary
                 )
                 Text(
                     textAlign = TextAlign.Center,
                     maxLines = 1,
                     text = title,
-                    style = YdsTheme.typography.Title2,
+                    style = YdsTheme.typography.title2,
                     color = YdsTheme.colors.textPrimary
                 )
             }

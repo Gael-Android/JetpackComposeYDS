@@ -145,7 +145,7 @@ fun PasswordTextField(
             Text(
                 text = passwordTextFieldState.fieldLabelText,
                 color = passwordTextFieldState.labelColor,
-                style = YdsTheme.typography.SubTitle3
+                style = YdsTheme.typography.subTitle3
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -167,11 +167,11 @@ fun PasswordTextField(
                 placeholder = {
                     Text(
                         text = passwordTextFieldState.placeHolderText,
-                        style = YdsTheme.typography.Body1
+                        style = YdsTheme.typography.body1
                     )
                 },
                 visualTransformation = if (isHide) PasswordVisualTransformation() else VisualTransformation.None,
-                textStyle = YdsTheme.typography.Body1,
+                textStyle = YdsTheme.typography.body1,
                 trailingIcon = {
                     if (passwordTextFieldState.isTyping) {
                         YdsIcon(
@@ -219,7 +219,7 @@ fun PasswordTextField(
                 passwordTextFieldState.helperLabelText,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 color = passwordTextFieldState.helperColor,
-                style = YdsTheme.typography.Caption1
+                style = YdsTheme.typography.caption1
             )
         }
     }

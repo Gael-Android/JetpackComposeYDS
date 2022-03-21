@@ -91,10 +91,10 @@ fun SearchTextField(
             placeholder = {
                 Text(
                     text = searchTextFieldState.placeHolderText,
-                    style = YdsTheme.typography.Body1
+                    style = YdsTheme.typography.body1
                 )
             },
-            textStyle = YdsTheme.typography.Body1,
+            textStyle = YdsTheme.typography.body1,
             leadingIcon = {
                 YdsIcon(
                     id = R.drawable.ic_search_line,
