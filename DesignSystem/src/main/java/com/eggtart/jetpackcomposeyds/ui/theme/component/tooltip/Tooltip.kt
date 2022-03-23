@@ -138,8 +138,8 @@ data class TooltipState(
     }
 
     sealed class DurationState(val millisecond: Int) {
-        object Short : DurationState(1500)
-        object Medium : DurationState(2500)
+        object Short : DurationState(100)
+        object Medium : DurationState(250)
     }
 
     sealed class TailPositionState {
@@ -284,7 +284,9 @@ fun Tooltip(
 private fun Preview() {
     JetpackComposeYDSTheme {
         var state by rememberTooltipState(
-            message = "홈에서 실시간 피드를 확인해보세요"
+            message = "홈에서 실시간 피드를 확인해보세요",
+            tailDirectionState = TooltipState.TailDirectionState.Start,
+            tailPositionState = TooltipState.TailPositionState.Start
         )
 
         Column(
