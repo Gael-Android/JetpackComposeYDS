@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.path
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.eggtart.jetpackcomposeyds.ui.theme.JetpackComposeYDSTheme
 import com.eggtart.jetpackcomposeyds.ui.theme.YdsTheme
@@ -94,6 +95,7 @@ data class TooltipState(
     val tailPositionState: TailPositionState = TailPositionState.Start,
     val backgroundColorState: BackgroundColorState = BackgroundColorState.ToolTipBG,
     val durationState: DurationState = DurationState.Medium,
+    val offset: Pair<Dp, Dp> = Pair(0.dp, 0.dp) // 안타깝지만 수동으로 나타날 좌표를 설정해야
 ) {
     val mutableTransitionState =
         MutableTransitionState(INVISIBLE)
@@ -168,12 +170,13 @@ fun rememberTooltipState(
     tailPositionState: TooltipState.TailPositionState = TooltipState.TailPositionState.Start,
     backgroundColorState: TooltipState.BackgroundColorState = TooltipState.BackgroundColorState.ToolTipBG,
     durationState: TooltipState.DurationState = TooltipState.DurationState.Medium,
+    offset: Pair<Dp, Dp> = Pair(0.dp, 0.dp) // 안타깝지만 수동으로 나타날 좌표를 설정해야
 ) = remember(
-    message, tailDirectionState, tailPositionState, backgroundColorState, durationState
+    message, tailDirectionState, tailPositionState, backgroundColorState, durationState, offset
 ) {
     mutableStateOf(
         TooltipState(
-            message, tailDirectionState, tailPositionState, backgroundColorState, durationState
+            message, tailDirectionState, tailPositionState, backgroundColorState, durationState, offset
         )
     )
 }
@@ -197,7 +200,7 @@ fun Tooltip(
     }
 
     AnimatedVisibility(
-        modifier = Modifier.offset(100.dp, 100.dp),
+        modifier = Modifier.offset(tooltipState.offset.first, tooltipState.offset.second),
         visibleState = tooltipState.mutableTransitionState,
         enter = fadeIn(
             animationSpec = TweenSpec(
